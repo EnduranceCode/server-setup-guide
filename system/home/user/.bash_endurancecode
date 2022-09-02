@@ -1,0 +1,145 @@
+# Bash Prompt Customization
+# -------------------------
+
+# Colors variables
+# Color codes from https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
+#
+black="\[\033[0;30m\]"
+red="\[\033[0;31m\]"
+green="\[\033[0;32m\]"
+yellow="\[\033[0;33m\]"
+blue="\[\033[0;34m\]"
+magenta="\[\033[0;35m\]"
+cyan="\[\033[0;36m\]"
+white="\[\033[0;37m\]"
+brightBlack="\[\033[0;90m\]"
+brightRed="\[\033[0;91m\]"
+brightGreen="\[\033[0;92m\]"
+brightYellow="\[\033[0;93m\]"
+brightBlue="\[\033[0;94m\]"
+brightMagenta="\[\033[0;95m\]"
+brightCyan="\[\033[0;96m\]"
+brightWhite="\[\033[0;97m\]"
+reset="\[\033[0m\]"
+
+# Custom the Bash prompt
+#
+# '\u'            adds the name of the current user to the prompt
+# '\$(__git_ps1)' adds git-related stuff
+# '\W'            adds the name of the current directory
+#
+# Further reading in https://www.cyberciti.biz/tips/howto-linux-unix-bash-shell-setup-prompt.html
+# Newline in Bash Windows solved with "JustoGotcha" comment on Stack Overflow answer https://stackoverflow.com/a/21561763
+#
+export PS1="$magenta\h$reset"$'\n'"$green\u$reset:$red\W$yellow\$(__git_ps1) $reset"$'\n'"$red$ $reset"
+
+# Enable git tab completion for branch names
+#
+# The following command is commented because it seems that the current git versions
+# are already including this feature and running the command seems to disable it.
+# If the feature isn't working, uncomment the below to try to enable it
+
+# source ~/.git_prompt/.git-completion.bash
+ 
+# Change command prompt in repositories
+#
+# The following command is commented because it seems that the current git versions
+# are already including this feature and running the command seems to disable it.
+# If the feature isn't working, uncomment the below to try to enable it
+#
+# source ~/.git_prompt/.git-prompt.sh
+
+# Shows '*' in prompt of repositoires with uncommited changes
+# -----------------------------------------------------------
+#
+export GIT_PS1_SHOWDIRTYSTATE=1
+
+# Command aliases
+# ---------------
+
+alias ld='ls --group-directories-first -la'
+alias home='cd ~/'
+alias dev='cd ~/Code'
+
+alias npm-global='npm list -g --depth 0'
+
+# Git related command aliases
+# ---------------------------
+
+alias cgd='clear && git diff'
+alias cgl='clear && git log --oneline -15'
+alias cgls='clear && git log --oneline -15 && git status'
+alias cgs='clear && git status'
+alias gd='git diff'
+alias gl='git log --oneline -15'
+alias gs='git status'
+alias gls='git log --oneline -15 && git status'
+alias gpr='git pull --rebase'
+
+# Custom bash commands
+# --------------------
+
+# List PATH variables on a formatted mode as explained on the nixCraft blog
+# https://www.cyberciti.biz/faq/howto-print-path-variable/
+#
+function path()
+{
+    old=$IFS
+    IFS=:
+    printf "%s\n" $PATH
+    IFS=$old
+}
+
+# Install and config ESLint in a project's root folder to use with VS Code
+#
+set-eslint()
+{
+    npm install --save-dev eslint
+    npm install --save-dev eslint-config-prettier
+    npm install --save-dev prettier
+    npm install --save-dev eslint-plugin-prettier
+
+    echo .
+    echo "You now must copy the file .eslintrc.json to the root folder of the project"
+}
+
+# Git related custom bash commands
+# --------------------------------
+
+# List the lines with TODO in the output of the command
+# git diff from the first commit authored by the repos current user
+#
+# Made with the help of the following resources:
+# https://www.tecmint.com/assign-linux-command-output-to-variable/
+# https://stackoverflow.com/a/4262780
+# https://stackoverflow.com/a/31448684
+# https://stackoverflow.com/a/10067297
+# https://stackoverflow.com/a/2798833
+# https://stackoverflow.com/a/6482403
+#
+todos()
+{
+    USER=$(git config user.name)
+    FIRST_COMMIT=$(git log --oneline --author="$USER" --reverse --pretty=format:"%h" | grep -m1 "")
+
+    if [ $# -eq 0 ]
+        then
+            git diff $FIRST_COMMIT | grep TODO: | grep +
+        else
+            git diff $1 | grep TODO: | grep +
+    fi
+}
+
+ # List all files changed with a specific commit
+ #
+ # As explained here: https://stackoverflow.com/a/424142
+ #
+ changed-files()
+ {
+    if [ $# -eq 0 ]
+        then
+            echo "Please add a parameter with the hash of the commit to be checked:"
+        else
+            git diff-tree --no-commit-id --name-only -r $1
+    fi
+ }
