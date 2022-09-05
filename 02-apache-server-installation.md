@@ -70,11 +70,11 @@ After making the above mentioned modifications in the **Apache Server** configur
 
     sudo systemctl status apache2.service -l --no-pager
 
-To check if Apache Server is running correctly, replace the **{LABELS}** in the below URL as appropriate and enter it into a browser’s address bar.
+To check if Apache Server is running correctly, replace the ***{LABEL}*** in the below URL as appropriate and enter it into a browser’s address bar.
 
       http://{SERVER_IP_ADDRESS}/
 
-> **Labels Definition**
+> **Label Definition**
 >
 > + **{SERVER_IP_ADDRESS}** : IP Address of the server that can be obtained with the command `hostname -I` or the command `curl -4 icanhazip.com`
 
@@ -151,12 +151,12 @@ Start editing the **Apache Server** default Virtual Host configuration file with
 
     sudo nano /etc/apache2/sites-available/000-default.conf
 
-Replace the **{LABELS}** in the below snippet as appropriate and use it to replace the existing directives in the default Virtual Host configuration file.
+Replace the ***{LABEL}*** in the below snippet as appropriate and use it to replace the existing directives in the default Virtual Host configuration file.
 
     ServerAdmin {SERVER_ADMIN_EMAIL}
     DocumentRoot /srv/www/html
 
-> **Labels Definition**
+> **Label Definition**
 >
 > + **{SERVER_ADMIN_EMAIL}** : The server's admin e-mail
 
@@ -175,11 +175,11 @@ Enable the default  Virtual Host configuration file with the following commands:
 
     sudo systemctl status apache2.service -l --no-pager
 
-To check if Apache Server running correctly, replace the **{LABELS}** in the below URL as appropriate and enter it into a browser’s address bar.
+To check if Apache Server running correctly, replace the ***{LABEL}*** in the below URL as appropriate and enter it into a browser’s address bar.
 
       http://{SERVER_IP_ADDRESS}/
 
-> **Labels Definition**
+> **Label Definition**
 >
 > + **{SERVER_IP_ADDRESS}** : IP Address of the server that can be obtained with the command `hostname -I` or the command `curl -4 icanhazip.com`
 
@@ -222,11 +222,11 @@ To verify if the new settings are working as intended, execute the below command
     touch /tmp/newfile
     ls --group-directories-first -la /tmp
 
-To give a user writing permissions on the **Apache Server** root folder it's now necessary to add him to the `www-data` group. Do that, replacing the **{LABELS}** in the below command as appropriate and then execute it.
+To give a user writing permissions on the **Apache Server** root folder it's now necessary to add him to the `www-data` group. Do that, replacing the ***{LABEL}*** in the below command as appropriate and then execute it.
 
     sudo usermod -aG www-data {USER}
 
-> **Labels Definition**
+> **Label Definition**
 >
 > + **{USER}** : The user account to be added to the `www-data` group
 
@@ -243,11 +243,13 @@ In a more restrictive scenario, the **Apache Server** server should [only have w
     sudo find /srv/www -type d -exec chmod -c 2750 {} +
     sudo find /srv/www -type f -exec chmod -c 650 {} +
 
-For the folders that must be writable by the **Apache Server**, replace the **{LABELS}** in the below commands as appropriate and execute it for each folder that has to be writable by the **Apache Server**
+For the folders that must be writable by the **Apache Server**, replace the ***{LABELS}*** in the below commands as appropriate and execute it for each folder that has to be writable by the **Apache Server**
 
     sudo find /srv/www/{WRITABLE_FOLDER} -type d -exec chmod -c 2750 {} +
     sudo find /srv/www/{WRITABLE_FOLDER} -type f -exec chmod -c 650 {} +
 
+> **Labels Definition**
+>
 > + **{WRITABLE_FOLDER}** : The folder that must be writable by the **Apache Server**
 
 The `ùmask` has to be set accordingly the permissions level set with above command, therefore it must be set to `027`. To check the current `umask`value, execute the following command:

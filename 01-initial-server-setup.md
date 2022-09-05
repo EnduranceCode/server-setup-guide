@@ -34,27 +34,27 @@ Newly deployed servers only have a `root` account set, therefore, the first logi
 
 ### 1.3. Create a user
 
-As it's more secure to login with a user other than the `root` user, replace the **{LABEL}** in the below command as appropriate and use it to [create a new user](https://linuxize.com/post/how-to-add-and-delete-users-on-ubuntu-20-04/). When prompted, provide the new user's password (providing an answer to the subsequent questions is optional).
+As it's more secure to login with a user other than the `root` user, replace the ***{LABEL}*** in the below command as appropriate and use it to [create a new user](https://linuxize.com/post/how-to-add-and-delete-users-on-ubuntu-20-04/). When prompted, provide the new user's password (providing an answer to the subsequent questions is optional).
 
     sudo adduser {USERNAME}
 
-> **Labels Definition**
+> **Label Definition**
 >
 > + **{USERNAME}** : Name of the new user account
 
-To enable the newly created user to perform administrative tasks, replace the **{LABEL}** in the below command as appropriate in the below command and use it to [add the user to the `sudo` group](https://linuxize.com/post/how-to-add-user-to-group-in-linux/).
+To enable the newly created user to perform administrative tasks, replace the ***{LABEL}*** in the below command as appropriate in the below command and use it to [add the user to the `sudo` group](https://linuxize.com/post/how-to-add-user-to-group-in-linux/).
 
     usermod -aG sudo {USERNAME}
 
-> **Labels Definition**
+> **Label Definition**
 >
 > + **{USERNAME}** : Name of the user account to be added to the `sudo` group
 
-Replace the **{LABEL}** in the below command as appropriate and use it to login as the newly created user.
+Replace the ***{LABEL}*** in the below command as appropriate and use it to login as the newly created user.
 
     su - {USERNAME}
 
-> **Labels Definition**
+> **Label Definition**
 >
 > + **{USERNAME}** : Name of the user account
 
@@ -71,11 +71,11 @@ To double check if the user has root privileges, perform a system update with th
 
 As the server was deployed to only accept [SSH key-based login](https://linuxize.com/post/how-to-setup-passwordless-ssh-login/), it is necessary to [enable the SSH key-based login](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-on-ubuntu-22-04) for the created user.
 
-If not already logged as the new user, replace the **{LABEL}** in the below command as appropriate and execute it to login with the correct user account.
+If not already logged as the new user, replace the ***{LABEL}*** in the below command as appropriate and execute it to login with the correct user account.
 
     su - {USERNAME}
 
-> **Labels Definition**
+> **Label Definition**
 >
 > + **{USERNAME}** : Name of the user account on the server
 
@@ -83,21 +83,21 @@ Make sure that the user's `~/.ssh` directory is created with the following comma
 
     mkdir -p ~/.ssh
 
-Add the client's public SSH Key to the server's `authorized_keys` file (**ON THE SERVER** user's `~/.ssh` directory), replace the **{LABEL}** in the below command as appropriate and execute it on the server
+Add the client's public SSH Key to the server's `authorized_keys` file (**ON THE SERVER** user's `~/.ssh` directory), replace the ***{LABEL}*** in the below command as appropriate and execute it on the server
 
     echo {SSH_KEY} >> ~/.ssh/authorized_keys
 
-> **Labels Definition**
+> **Label Definition**
 >
 > + **{SSH_KEY}** : The public SSH key of the client machine obtained executing the command `cat ~/.ssh/id_rsa.pub` on the client machine
 
-To set the proper permissions on the created directory and files, replace the **{LABEL}** in the below commands as appropriate and execute it.
+To set the proper permissions on the created directory and files, replace the ***{LABEL}*** in the below commands as appropriate and execute it.
 
     chmod 700 ~/.ssh
     chmod 600 ~/.ssh/authorized_keys
     chown -R {USERNAME}:{USERNAME} ~/.ssh
 
-> **Labels Definition**
+> **Label Definition**
 >
 > + **{USERNAME}** : Name of the user account on the server
 
@@ -115,7 +115,7 @@ To make the login in the server process easier, [set the SSH Config File](https:
 
     nano ~/.ssh/config
 
-And then, replace the **{LABELS}** in the below snippet as appropriate and paste it on a new line of the `~/.ssh/config` file.
+And then, replace the ***{LABELS}*** in the below snippet as appropriate and paste it on a new line of the `~/.ssh/config` file.
 
     host    {HOST_NAME}
             hostname {SERVER_IP_ADDRESS}
@@ -129,11 +129,11 @@ And then, replace the **{LABELS}** in the below snippet as appropriate and paste
 
 Save the changes with the command `CTRL + O` and the exit the [*Nano text editor*](https://www.nano-editor.org/) with the command `CTRL + X`.
 
-Replace the **{LABEL}** in the below command as appropriate and then execute it to try to login on the server.
+Replace the ***{LABEL}*** in the below command as appropriate and then execute it to try to login on the server.
 
     ssh {HOST_NAME}
 
-> **Labels Definition**
+> **Label Definition**
 >
 > + **{HOST_NAME}** : Name given to the server and used on the `~/.ssh/config` file
 
@@ -160,11 +160,11 @@ Logout the server with the following command:
 
     exit
 
-And then, to verify that everything is still working perfectly, replace the **{LABEL}** in the below command as appropriate and execute it to try to login on the server.
+And then, to verify that everything is still working perfectly, replace the ***{LABEL}*** in the below command as appropriate and execute it to try to login on the server.
 
     ssh {HOST_NAME}
 
-> **Labels Definition**
+> **Label Definition**
 >
 > + **{HOST_NAME}** : Name given to the server and used on the `~/.ssh/config` file
 
@@ -232,7 +232,7 @@ If necessary, [install **Git**](https://help.ubuntu.com/lts/serverguide/git.html
 
     sudo apt update && sudo apt install git
 
-Replace the **{LABELS}** in the below command as appropriate and use it to set [**Git**'s global configuration](https://www.learnenough.com/git-tutorial#sec-installation_and_setup). Instructions for a more detailed **Git** global configuration can be found in [Git's Official Documentation](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup).
+Replace the ***{LABELS}*** in the below command as appropriate and use it to set [**Git**'s global configuration](https://www.learnenough.com/git-tutorial#sec-installation_and_setup). Instructions for a more detailed **Git** global configuration can be found in [Git's Official Documentation](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup).
 
     git config --global user.name "{USER}"
     git config --global user.email {EMAIL}
@@ -246,12 +246,12 @@ Replace the **{LABELS}** in the below command as appropriate and use it to set [
 
 ### 1.8. Bash prompt customization
 
-The file [.bash_endurancecode](system/home/user/.bash_endurancecode), that's going to be used to customize the bash environment, is stored at the folder `system/home/user/` of this repository. The auxiliary files that will, eventually, be needed for this customization are stored at the folder `system/home/user/.git_prompt/` of this repository. To [copy](https://linuxize.com/post/how-to-use-scp-command-to-securely-transfer-files/) the mentioned files and folders to the user's `home` folder **ON THE SERVER**, replace the **{LABELS}** in the below commands as appropriate and execute it, **ON A CLIENT MACHINE**, from the root folder of this repository.
+The file [.bash_endurancecode](system/home/user/.bash_endurancecode), that's going to be used to customize the bash environment, is stored at the folder `system/home/user/` of this repository. The auxiliary files that will, eventually, be needed for this customization are stored at the folder `system/home/user/.git_prompt/` of this repository. To [copy](https://linuxize.com/post/how-to-use-scp-command-to-securely-transfer-files/) the mentioned files and folders to the user's `home` folder **ON THE SERVER**, replace the ***{LABELS}*** in the below commands as appropriate and execute it, **ON A CLIENT MACHINE**, from the root folder of this repository.
 
     scp -r system/home/user/.git_prompt/ {HOST_NAME}:~/
     scp system/home/user/.bash_endurancecode {HOST_NAME}:~/
 
-> **Labels Definition**
+> **Label Definition**
 >
 > + **{HOST_NAME}** : Name given to the server on the SSH Config File
 
