@@ -8,7 +8,7 @@ I will be updating this guide as my knowledge and experience evolves. I will be 
 
 ## Table of Contents
 
-1. [Initial Setup](./01-initial-server-setup.md#1-initial-server-setup)
+1. [Initial Setup](./01-initial-server-setup.md)
     1. [Deploy the server](./01-initial-server-setup.md#11-deploy-the-server)
     2. [System update](./01-initial-server-setup.md#12-system-update)
     3. [Create a non root user](./01-initial-server-setup.md#13-create-a-user)
