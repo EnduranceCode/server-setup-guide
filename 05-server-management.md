@@ -6,7 +6,7 @@ This file contains the **Server management** section of [my personal guide to se
 
 ## Table of Contents
 
-4. [Server management](#4server-management)
+5. [Server management](#4server-management)
     1. [Apache | Create a Virtual Host](#41-apache--create-a-virtual-host)
     2. [Apache | Secure Apache with Let's Encrypt](#42-apache--secure-apache-with-lets-encrypt)
     3. [MySQL | Create a MySQL database](#43-mysql--create-a-mysql-database)
@@ -14,9 +14,9 @@ This file contains the **Server management** section of [my personal guide to se
     5. [MySQL | Grant privileges to a MySQL user](#45-mysql--grant-privileges-to-a-mysql-user)
     6. [MySQL | Import a database from a file to a MySQL database](#46-mysql--import-a-database-from-a-file-to-a-mysql-database)
 
-## 4.Server management
+## 5.Server management
 
-### 4.1. Apache | Create a Virtual Host
+### 451. Apache | Create a Virtual Host
 
 To create the folder for the default Virtual Host, replace the ***{LABEL}*** in the below commands as appropriate and then execute it.
 
@@ -100,9 +100,9 @@ After making all the necessary changes, save the file with the command `CTRL + O
 > + **{VIRTUAL_HOST_FOLDER}** : The [*Second-level domain*](https://en.wikipedia.org/wiki/Second-level_domain) of the new Virtual Host
 > + **{VIRTUAL_HOST_TLD}** : The [TLD](https://en.wikipedia.org/wiki/Top-level_domain) of the new Virtual Host
 
-### 4.2. Apache | Secure Apache with Let's Encrypt
+### 5.2. Apache | Secure Apache with Let's Encrypt
 
-#### 4.2.1. Install Certbot
+#### 5.2.1. Install Certbot
 
 [The recommended process to install **Certbot**](https://certbot.eff.org/instructions?ws=apache&os=ubuntufocal) is with [*snapd*](https://snapcraft.io/docs/installing-snapd). Therefore, execute  the below commands to ensure that the server's version of *snapd* is up to date.
 
@@ -117,7 +117,7 @@ To ensure that the `certbot` command can be executed, run the following command:
 
     sudo ln -s /snap/bin/certbot /usr/bin/certbot
 
-#### 4.2.2. Obtain an SSL Certificate
+#### 5.2.2. Obtain an SSL Certificate
 
 [Get a SSL certificate](https://www.digitalocean.com/community/tutorials/how-to-secure-apache-with-let-s-encrypt-on-ubuntu-22-04#step-4-obtaining-an-ssl-certificate) and have **Certbot** edit the **Apache Server** configuration automatically to serve it, turning on HTTPS access with the following command:
 
@@ -145,7 +145,7 @@ If the SSL certificate installation was successful, the site will be redirected 
 
 [SSL Labs Server Test](https://www.ssllabs.com/ssltest/) can be used to verify the certificate’s grade and obtain detailed information about it, from the perspective of an external service.
 
-#### 3.2.3. Verify Certbot Auto-Renewal
+#### 5.2.3. Verify Certbot Auto-Renewal
 
 [Let’s Encrypt](https://letsencrypt.org/) certificates are only valid for ninety days. Therefore, it is fundamental to automate the certificate renewal process. The **Certbot** package installed takes care of renewals by including a renew script in one of the following locations:
 
@@ -161,7 +161,7 @@ To test the renewal process, execute the following command:
 
     sudo certbot renew --dry-run
 
-## 4.3. MySQL | Create a MySQL database
+## 5.3. MySQL | Create a MySQL database
 
 To [create a database](https://www.mysqltutorial.org/mysql-create-database/), defining its [Character Set](https://www.mysqltutorial.org/mysql-character-set/) and [Collation](https://www.mysqltutorial.org/mysql-collation/), replace the ***{LABELS}*** in the below command as appropriate and then execute it.
 
@@ -173,7 +173,7 @@ To [create a database](https://www.mysqltutorial.org/mysql-create-database/), de
 > + **{CHARACTER_SET_NAME}** : The character set of the new database;
 > + **{COLLATION_NAME}** : The collation of the new database.
 
-## 4.4. MySQL | Create a MySQL user
+## 5.4. MySQL | Create a MySQL user
 
 To [create a new user in the MySQL Server](https://www.mysqltutorial.org/mysql-create-user.aspx), replace the ****{LABELS}**** in the below command as appropriate and then execute it.
 
@@ -188,7 +188,7 @@ To [create a new user in the MySQL Server](https://www.mysqltutorial.org/mysql-c
 
 The [MySQL documentation recommends](https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password) the `caching_sha2_password` authentication plugin but there is a known issue with some versions of PHP that causes problems with this plugin and therefore, on databases to be accessed by PHP applications it's better to use the `mysql_native_password` authentication plugin.
 
-## 4.5. MySQL | Grant privileges to a MySQL user
+## 5.5. MySQL | Grant privileges to a MySQL user
 
 To [grant privileges to a user in the MySQL Server](https://www.mysqltutorial.org/mysql-grant.aspx), replace the ***{LABELS}*** in the below command as appropriate and then execute it.
 
@@ -216,7 +216,7 @@ The assignment of privileges on all tables of a database is done with the follow
 
     {DATABASE_NAME}.*
 
-## 4.6. MySQL | Import a database from a file to a MySQL database
+## 5.6. MySQL | Import a database from a file to a MySQL database
 
 If the file that is going to be imported to the MySQL database is not already stored on the server, replace the ***{LABELS}*** in the below command as appropriate and execute it **ON A CLIENT MACHINE** to [copy the file using SCP](https://linuxize.com/post/how-to-use-scp-command-to-securely-transfer-files/) to the server.
 
