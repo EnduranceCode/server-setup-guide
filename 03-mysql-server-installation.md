@@ -20,7 +20,7 @@ This file contains the **[MySQL Server installation](https://www.digitalocean.co
     sudo apt update
     sudo apt install mysql-server
 
-To see the names of the installed packages, use the following command:
+To see the names of the installed packages, execute the following command:
 
     dpkg -l | grep mysql | grep ii
 
@@ -28,11 +28,11 @@ To confirm that the installation was successful and to get the installed **MySQL
 
     mysql --version
 
-The confirm that *MySQL* service is running, run the following command:
+The confirm that *MySQL* service is running, execute the following command:
 
     sudo service mysql status
 
-And to check the network status of *MySQL*, run the following command:
+And to check the network status of *MySQL*, execute the following command:
 
     sudo ss -tap | grep mysql
 
@@ -132,7 +132,7 @@ Check the output of the below command to confirm that the folder was properly ba
 
     ls --group-directories-first -la /var/lib/
 
-Edit the file `/etc/mysql/mysql.conf/mysqdld.cnf` to set the new value for the key `datadir`. Open the **MySQL** configuration file (`mysqdld.cnf`) with the [**Nano text editor**](https://www.nano-editor.org/) using the following command:
+Edit the file `/etc/mysql/mysql.conf/mysqdld.cnf` to set the new value for the key `datadir`. Open the **MySQL** configuration file (`mysqdld.cnf`) with the [**nano text editor**](https://www.nano-editor.org/) using the following command:
 
     sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
 
@@ -140,9 +140,9 @@ Within the file, use the command `CTRL + W` to search for the key `datadir` and 
 
     datadir = /srv/db/mysql
 
-Save the modifications with the command `CTRL + O` and then exit the [Nano text editor](https://www.nano-editor.org/) with the command `CTRL + X`.
+Save the modifications with the command `CTRL + O` and then exit the [nano text editor](https://www.nano-editor.org/) with the command `CTRL + X`.
 
-[*AppArmor*](https://wiki.ubuntu.com/AppArmor) needs to be configured to let **MySQL** write to the new directory. That is done creating an alias between the default directory and the new location. Open the file `alias` with the [**Nano text editor**](https://www.nano-editor.org/) using the following command:
+[*AppArmor*](https://wiki.ubuntu.com/AppArmor) needs to be configured to let **MySQL** write to the new directory. That is done creating an alias between the default directory and the new location. Open the file `alias` with the [**nano text editor**](https://www.nano-editor.org/) using the following command:
 
     sudo nano /etc/apparmor.d/tunables/alias
 
@@ -153,7 +153,7 @@ Within the file, add at the bottom, the following code snippet:
 
 The final comma at the end of the above snippet must be included.
 
-Save the modifications with the command `CTRL + O` and then exit the [Nano text editor](https://www.nano-editor.org/) with the command `CTRL + X`.
+Save the modifications with the command `CTRL + O` and then exit the [nano text editor](https://www.nano-editor.org/) with the command `CTRL + X`.
 
 To make the modifications effective, restart AppArmor with the following command:
 

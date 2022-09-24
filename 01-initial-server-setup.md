@@ -89,7 +89,7 @@ Add the client's public SSH Key to the server's `authorized_keys` file (**ON THE
 
 > **Label Definition**
 >
-> + **{SSH_KEY}** : The public SSH key of the client machine obtained executing the command `cat ~/.ssh/id_rsa.pub` on the client machine
+> + **{SSH_KEY}** : The public SSH key of the client machine obtained executing the command `cat ~/.ssh/id_rsa.pub` o**ON THE CLIENT** machine
 
 To set the proper permissions on the created directory and files, replace the ***{LABEL}*** in the below commands as appropriate and execute it.
 
@@ -127,7 +127,7 @@ And then, replace the ***{LABELS}*** in the below snippet as appropriate and pas
 > + **{SERVER_IP_ADDRESS}** : IP Address of the server
 > + **{USERNAME}** : Name of the user account on the server
 
-Save the changes with the command `CTRL + O` and the exit the [*Nano text editor*](https://www.nano-editor.org/) with the command `CTRL + X`.
+Save the changes with the command `CTRL + O` and the exit the [*nano text editor*](https://www.nano-editor.org/) with the command `CTRL + X`.
 
 Replace the ***{LABEL}*** in the below command as appropriate and then execute it to try to login on the server.
 
@@ -150,7 +150,7 @@ Then, use the command `CTRL + W` to search for the directives shown on the below
 
 The directive `PermitRootLogin no` will disable [SSH root login](https://www.tecmint.com/disable-or-enable-ssh-root-login-and-limit-ssh-access-in-linux/) which will enhance security because any hacker can try to brute force the root password and gain access to the system.
 
-Save the modifications with the command `CTRL + O` and then exit the [*Nano text editor*](https://www.nano-editor.org/) with the command `CTRL + X`.
+Save the modifications with the command `CTRL + O` and then exit the [*nano text editor*](https://www.nano-editor.org/) with the command `CTRL + X`.
 
 Make sure that the modifications made are effective by restarting the SSH service with the following command:
 
@@ -195,11 +195,11 @@ If the output of the above command shows the below snippet, IPV6 is already enab
 
     IPV6=yes
 
-If IPV6 is not yet enable, open the file `/etc/default/ufw` with the [*Nano text editor*](https://www.nano-editor.org/) executing the following command:
+If IPV6 is not yet enable, open the file `/etc/default/ufw` with the [*nano text editor*](https://www.nano-editor.org/) executing the following command:
 
     sudo nano /etc/default/ufw
 
-Make the necessary modifications, save it with the command `CTRL + O` and then exit the [*Nano text editor*](https://www.nano-editor.org/) with the command `CTRL + X`.
+Make the necessary modifications, save it with the command `CTRL + O` and then exit the [*nano text editor*](https://www.nano-editor.org/) with the command `CTRL + X`.
 
 #### 1.6.2. Setup the default policies
 
@@ -224,7 +224,7 @@ There will be a warning stating that this command may disrupt existing SSH conne
 
 ### 1.7. Git
 
-To check if [**Git**](https://git-scm.com) is already installed on the server, run the following command:
+To check if [**Git**](https://git-scm.com) is already installed on the server, execute the following command:
 
     which git && git --version
 
@@ -270,11 +270,11 @@ To complete the process, it's only necessary to edit the file `.bashrc` located 
         . ~/.bash_endurancecode
     fi
 
-Open the file `.bashrc` with [*Nano text editor*](https://www.nano-editor.org/) executing the following command:
+Open the file `.bashrc` with [*nano text editor*](https://www.nano-editor.org/) executing the following command:
 
     nano ~/.bashrc
 
-After adding the necessary modifications, save the file with the command `CTRL + O` and then exit [*Nano text editor*](https://www.nano-editor.org/) with the command `CTRL + X`.
+After adding the necessary modifications, save the file with the command `CTRL + O` and then exit [*nano text editor*](https://www.nano-editor.org/) with the command `CTRL + X`.
 
 Make the changes effective with the following command:
 
@@ -284,10 +284,10 @@ This bash customization will be effective every time the user logs in.
 
 ### 1.9. Additional folders in the home folder
 
-I like to add three more folders to the server's home folder: one named `Code`, another named `Software` and another named `Templates`. The first one is used to store all my code repositories, the second is used to store all the software packages that I download and install in the system and the third one is used . Those folders can be created with the following command:
+I like to add three more folders to the server's home folder: one named `Code`, another named `Software` and another named `Templates`. The first one is used to store all my code repositories, the second is used to store all the software packages that I download and install in the system and the third one is used to store any template needed for the server management. Those folders can be created with the following command:
 
     mkdir ~/Code && mkdir ~/Software && mkdir Templates
 
-To check if the new folders were properly created, run the following command:
+To check if the new folders were properly created, execute the following command:
 
     ls -la --group-directories-first

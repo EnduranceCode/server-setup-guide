@@ -6,17 +6,17 @@ This file contains the **Server management** section of [my personal guide to se
 
 ## Table of Contents
 
-5. [Server management](#4server-management)
-    1. [Apache | Create a Virtual Host](#41-apache--create-a-virtual-host)
-    2. [Apache | Secure Apache with Let's Encrypt](#42-apache--secure-apache-with-lets-encrypt)
-    3. [MySQL | Create a MySQL database](#43-mysql--create-a-mysql-database)
-    4. [MySQL | Create a MySQL user](#44-mysql--create-a-mysql-user)
-    5. [MySQL | Grant privileges to a MySQL user](#45-mysql--grant-privileges-to-a-mysql-user)
-    6. [MySQL | Import a database from a file to a MySQL database](#46-mysql--import-a-database-from-a-file-to-a-mysql-database)
+5. [Server management](#5server-management)
+    1. [Apache | Create a Virtual Host](#51-apache--create-a-virtual-host)
+    2. [Apache | Secure Apache with Let's Encrypt](#52-apache--secure-apache-with-lets-encrypt)
+    3. [MySQL | Create a MySQL database](#53-mysql--create-a-mysql-database)
+    4. [MySQL | Create a MySQL user](#54-mysql--create-a-mysql-user)
+    5. [MySQL | Grant privileges to a MySQL user](#55-mysql--grant-privileges-to-a-mysql-user)
+    6. [MySQL | Import a database from a file to a MySQL database](#56-mysql--import-a-database-from-a-file-to-a-mysql-database)
 
 ## 5.Server management
 
-### 451. Apache | Create a Virtual Host
+### 5.1. Apache | Create a Virtual Host
 
 To create the folder for the default Virtual Host, replace the ***{LABEL}*** in the below commands as appropriate and then execute it.
 
@@ -39,7 +39,7 @@ To rename the file copied with the above command, replace the ***{LABEL}*** in t
 >
 > + **{VIRTUAL_HOST_FOLDER}** : The [*Second-level domain*](https://en.wikipedia.org/wiki/Second-level_domain) of the new Virtual Host
 
-To customize the default Virtual Host configuration file, replace the ***{LABEL}*** in the below command as appropriate and then execute it to open the file with the *Nano text editor*,.
+To customize the default Virtual Host configuration file, replace the ***{LABEL}*** in the below command as appropriate and then execute it to open the file with the [*nano text editor*](https://www.nano-editor.org/).
 
     sudo nano /etc/apache2/sites-available/{VIRTUAL_HOST_FOLDER}.conf
 
@@ -53,11 +53,11 @@ Within the file, use the command `CTRL + \` to replace the existing labels as ex
 + **{VIRTUAL_HOST_TLD}** : The [TLD](https://en.wikipedia.org/wiki/Top-level_domain) of the new Virtual Host
 + **{SERVER_ADMIN_EMAIL}** : The server's admin e-mail
 
-Check if it's necessary any further modifications, implement it if necessary and when everything is done, save the file with the command `CTRL + O` and then exit the [Nano text editor](https://www.nano-editor.org/) with the command `CTRL + X`. Validate the **Apache Server** configuration with the following command:
+Check if it's necessary any further modifications, implement it if necessary and when everything is done, save the file with the command `CTRL + O` and then exit the [*nano text editor*](https://www.nano-editor.org/) with the command `CTRL + X`. Validate the **Apache Server** configuration with the following command:
 
     sudo apachectl configtest
 
-To activate the new Virtual Host, replace the ***{LABEL}*** in the below command as appropriate and then execute it.
+To activate the new Virtual Host, replace the ***{LABEL}*** in the below commands as appropriate and then execute it.
 
     sudo a2ensite {VIRTUAL_HOST_FOLDER}.conf
     sudo systemctl reload apache2
@@ -77,7 +77,7 @@ If the domain of the Virtual Host created with the previous procedure has alread
 
 If the domain of the Virtual Host created with the previous procedure doesn't have its DNS Records pointing to the server's IP address it can still [be tested by temporarily modifying the `hosts` file of a local computer](https://www.digitalocean.com/community/tutorials/how-to-set-up-apache-virtual-hosts-on-ubuntu-20-04#step-6-optional-setting-up-local-hosts-file). This will intercept any requests for the domain that has been configured with previous described procedure and point them to the server, just as the DNS system would do if the domain DNS Records were already pointing to the server's IP address. This will only work from a local computer and is only for testing purposes.
 
-On a LOCAL machine, open the `hosts` file with the *Nano text editor* using the following command:
+On a LOCAL machine, open the `hosts` file with the *nano text editor* using the following command:
 
     sudo nano /etc/hosts
 
@@ -91,7 +91,7 @@ Within the file, replace the ***{LABELS}*** in the below snippet as appropriate 
 > + **{VIRTUAL_HOST_FOLDER}** : The [*Second-level domain*](https://en.wikipedia.org/wiki/Second-level_domain) of the new Virtual Host
 > + **{VIRTUAL_HOST_TLD}** : The [TLD](https://en.wikipedia.org/wiki/Top-level_domain) of the new Virtual Host
 
-After making all the necessary changes, save the file with the command `CTRL + O` and then exit the [Nano text editor](https://www.nano-editor.org/) with the command `CTRL + X`. Then, replace the ***{LABELS}*** as appropriate in the below URL and enter it into a browser’s address bar in the local computer where the `hosts` file was edited.
+After making all the necessary changes, save the file with the command `CTRL + O` and then exit the [*nano text editor*](https://www.nano-editor.org/) with the command `CTRL + X`. Then, replace the ***{LABELS}*** as appropriate in the below URL and enter it into a browser’s address bar in the local computer where the `hosts` file was edited.
 
       http://VIRTUAL_HOST_FOLDER}.{VIRTUAL_HOST_TLD}
 
@@ -113,7 +113,7 @@ Install the [**Certbot**](https://certbot.eff.org/) software on the server with 
 
     sudo snap install --classic certbot
 
-To ensure that the `certbot` command can be executed, run the following command:
+To ensure that the `certbot` command can be executed, execute the following command:
 
     sudo ln -s /snap/bin/certbot /usr/bin/certbot
 
@@ -153,7 +153,7 @@ If the SSL certificate installation was successful, the site will be redirected 
 + `/etc/cron.*/*`
 + `systemctl list-timers`
 
-This script runs twice a day and will automatically renew any certificate that’s within thirty days of expiration. To check the status of this service and make sure it’s active, [run the following command](https://community.letsencrypt.org/t/missing-cron-job-or-systemd-timer/153057/2):
+This script runs twice a day and will automatically renew any certificate that’s within thirty days of expiration. To check the status of this service and make sure it’s active, [execute the following command](https://community.letsencrypt.org/t/missing-cron-job-or-systemd-timer/153057/2):
 
     sudo systemctl status snap.certbot.renew.timer
 
@@ -175,7 +175,7 @@ To [create a database](https://www.mysqltutorial.org/mysql-create-database/), de
 
 ## 5.4. MySQL | Create a MySQL user
 
-To [create a new user in the MySQL Server](https://www.mysqltutorial.org/mysql-create-user.aspx), replace the ****{LABELS}**** in the below command as appropriate and then execute it.
+To [create a new user in the MySQL Server](https://www.mysqltutorial.org/mysql-create-user.aspx), replace the ***{LABELS}*** in the below command as appropriate and then execute it.
 
     CREATE USER '{USERNAME}'@'{HOST}' IDENTIFIED WITH {AUTHENTICATION_PLUGIN} BY '{PASSWORD}';
 

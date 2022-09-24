@@ -23,7 +23,7 @@ This file contains the **[Apache Server installation](https://www.digitalocean.c
 
     sudo apt update && sudo apt install apache2
 
-To confirm that the installation was successful and to get the installed **Apache Server** version, run the following command:
+To confirm that the installation was successful and to get the installed **Apache Server** version, execute the following command:
 
     apache2 -v
 
@@ -60,7 +60,7 @@ Within this file, use the command `CTRL + W` to search for the directive *Server
     # Fix the Apache AH00558 configuration error
     ServerName localhost
 
-Save the changes with the command `CTRL + O` and then exit the [Nano text editor](https://www.nano-editor.org/) with the command `CTRL + X`.
+Save the changes with the command `CTRL + O` and then exit the [nano text editor](https://www.nano-editor.org/) with the command `CTRL + X`.
 
 After making the above mentioned modifications in the **Apache Server** configuration, validate it with the following command:
 
@@ -72,7 +72,7 @@ After making the above mentioned modifications in the **Apache Server** configur
 
 To check if Apache Server is running correctly, replace the ***{LABEL}*** in the below URL as appropriate and enter it into a browser’s address bar.
 
-      http://{SERVER_IP_ADDRESS}/
+    http://{SERVER_IP_ADDRESS}/
 
 > **Label Definition**
 >
@@ -80,7 +80,7 @@ To check if Apache Server is running correctly, replace the ***{LABEL}*** in the
 
 ### 2.4. Change the Apache Server web root folder
 
-By default, the **Apache Server** root folder (where the [Virtual Hosts](http://httpd.apache.org/docs/current/vhosts/) are stored) is the folder `/var/www/` but I prefer to use the folder `/srv/www/` instead. To create this folder, run the following commands:
+By default, the **Apache Server** root folder (where the [Virtual Hosts](http://httpd.apache.org/docs/current/vhosts/) are stored) is the folder `/var/www/` but I prefer to use the folder `/srv/www/` instead. To create this folder, execute the following commands:
 
     sudo mkdir /srv/www
 
@@ -88,7 +88,7 @@ Check the output of the below command to verify that the folder was properly cre
 
     ls --group-directories-first -la /srv/
 
-The file `/etc/apache2/apache2.conf` must be edited to allow the **Apache Server** to access the folder `/srv/www/`. Use the [*Nano text editor*](https://www.nano-editor.org/) to edit the file `apache2.conf` with the following command:
+The file `/etc/apache2/apache2.conf` must be edited to allow the **Apache Server** to access the folder `/srv/www/`. Use the [*nano text editor*](https://www.nano-editor.org/) to edit the file `apache2.conf` with the following command:
 
     sudo nano /etc/apache2/apache2.conf
 
@@ -115,7 +115,7 @@ Still within the file `/etc/apache2/apache2.conf`, add the bellow snippet immedi
     # Configure the DocumentRoot directive
     DocumentRoot /srv/www
 
-After introducing all the changes, save the file with the command `CTRL + O` and then exit the [*Nano text editor*](https://www.nano-editor.org/) with the command `CTRL + X`.
+After introducing all the changes, save the file with the command `CTRL + O` and then exit the [*nano text editor*](https://www.nano-editor.org/) with the command `CTRL + X`.
 
 Validate the **Apache Server** configuration with the following command:
 
@@ -160,7 +160,7 @@ Replace the ***{LABEL}*** in the below snippet as appropriate and use it to repl
 >
 > + **{SERVER_ADMIN_EMAIL}** : The server's admin e-mail
 
-After introducing all the changes, save the file with the command `CTRL + O` and then exit the [Nano text editor](https://www.nano-editor.org/) with the command `CTRL + X`.
+After introducing all the changes, save the file with the command `CTRL + O` and then exit the [nano text editor](https://www.nano-editor.org/) with the command `CTRL + X`.
 
 Validate the **Apache Server** configuration with the following command:
 
@@ -203,7 +203,7 @@ The `ùmask` has to be set accordingly the permissions level set with above comm
 
     umask
 
-To [permanently set the `umask` value](https://linuxize.com/post/umask-command-in-linux/#setting-the-mask-value) system-wide, open the `/etc/profile` file with [*Nano text editor](https://www.nano-editor.org/) using the following command:
+To [permanently set the `umask` value](https://linuxize.com/post/umask-command-in-linux/#setting-the-mask-value) system-wide, open the `/etc/profile` file with [*nano text editor](https://www.nano-editor.org/) using the following command:
 
     sudo nano /etc/profile
 
@@ -256,7 +256,7 @@ The `ùmask` has to be set accordingly the permissions level set with above comm
 
     umask
 
-To [permanently set the `umask` value](https://linuxize.com/post/umask-command-in-linux/#setting-the-mask-value) system-wide, open the `/etc/profile` file with [*Nano text editor](https://www.nano-editor.org/) using the following command:
+To [permanently set the `umask` value](https://linuxize.com/post/umask-command-in-linux/#setting-the-mask-value) system-wide, open the `/etc/profile` file with [*nano text editor](https://www.nano-editor.org/) using the following command:
 
     sudo nano /etc/profile
 
@@ -286,11 +286,11 @@ To check if the files were properly copied, check the output of the following co
 
     ls --group-directories-first -la /usr/local/bin/
 
-The file `/usr/local/bin/fixApacheWebRootPermissions.sh` might need some modifications to ensure its compatibility with the server's system. Use the below command to open the file `fixApacheWebRootPermissions.sh` with the [*Nano text editor*](https://www.nano-editor.org/).
+The file `/usr/local/bin/fixApacheWebRootPermissions.sh` might need some modifications to ensure its compatibility with the server's system. Use the below command to open the file `fixApacheWebRootPermissions.sh` with the [*nano text editor*](https://www.nano-editor.org/).
 
     sudo nano /usr/local/bin/fixApacheWebRootPermissions.sh
 
-Check if the script is correct, make all the needed (if any) modifications and then save the file with the command `CTRL + O` and exit the [*Nano text editor*](https://www.nano-editor.org/) with the command `CTRL + X`.
+Check if the script is correct, make all the needed (if any) modifications and then save the file with the command `CTRL + O` and exit the [*nano text editor*](https://www.nano-editor.org/) with the command `CTRL + X`.
 
 Repeat the previous process for the file `/usr/local/bin/cronJobFixApacheWebRootPermissions.sh` with the following command:
 
@@ -318,6 +318,6 @@ The above command will open a text editor in the terminal. Append the below snip
     # Daily fix of the Apache's root folder permissions
     0 3 * * * /usr/local/bin/cronJobFixApacheWebRootPermissions.sh
 
-After checking that the added commands are correct and well suited for the system, save and close the file. To list the cron jobs created, run the following command:
+After checking that the added commands are correct and well suited for the system, save and close the file. To list the cron jobs created, execute the following command:
 
     sudo crontab -l

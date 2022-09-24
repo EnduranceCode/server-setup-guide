@@ -98,12 +98,12 @@ To install [FastCGI Process Manager (FPM)](https://www.php.net/manual/en/install
 
     sudo apt install php-fpm
 
-To enable FPM in Apache2 run the following commands:
+To enable FPM in Apache2 execute the following commands:
 
     sudo a2enmod proxy_fcgi setenvif
     sudo a2enconf php-fpm
 
-To activate the new configuration, you need to run:
+To activate the new configuration, you need to execute the following command:
 
     sudo systemctl reload apache2
 
@@ -169,7 +169,7 @@ To confirm that the above specified *sendmail* path is indeed correct, compare i
 
     which sendmail
 
-To activate the new configuration, run the following command:
+To activate the new configuration, execute the following command:
 
     sudo systemctl reload apache2
 
