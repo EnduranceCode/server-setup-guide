@@ -42,3 +42,5 @@ I will be updating this guide as my knowledge and experience evolves. I will be 
     4. [MySQL | Create a MySQL user](./05-server-management.md##54-mysql--create-a-mysql-user)
     5. [MySQL | Grant privileges to a MySQL user](./05-server-management.md##55-mysql--grant-privileges-to-a-mysql-user)
     6. [MySQL | Import a database from a file to a MySQL database](./05-server-management.md##56-mysql--import-a-database-from-a-file-to-a-mysql-database)
+6. [Linux Upskill Challenge | Resources & Extensions](./06-linux-upskill-challenge-md)
+    1. [Day 1 | Get to know your server](./06-linux-upskill-challenge-md#61-day-1--get-to-know-your-server)
