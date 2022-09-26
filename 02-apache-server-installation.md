@@ -66,6 +66,10 @@ After making the above mentioned modifications in the **Apache Server** configur
 
     sudo apachectl configtest
 
+If everything is correct, make the changes effective, running the following command:
+
+    sudo systemctl restart apache2
+
 [Check](https://www.digitalocean.com/community/tutorials/how-to-install-the-apache-web-server-on-ubuntu-22-04#step-3-checking-your-web-server) if the **Apache Server** service is active with the following command:
 
     sudo systemctl status apache2.service -l --no-pager
@@ -92,7 +96,7 @@ The file `/etc/apache2/apache2.conf` must be edited to allow the **Apache Server
 
     sudo nano /etc/apache2/apache2.conf
 
-Within the file, use the command `CTRL + W` to search for the **\<Directory>** directives and comment out the `/var/www/` folder directive. When finished, it must look like the below snippet.
+Within the file, use the command `CTRL + W` to search for the **\<Directory** directives and comment out the `/var/www/` folder directive. When finished, it must look like the below snippet.
 
     #<Directory /var/www/>
     #   Options Indexes FollowSymLinks

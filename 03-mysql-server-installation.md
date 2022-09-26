@@ -171,7 +171,7 @@ To confirm that **MySQL** service is running, check the output of the following 
 
     sudo service mysql status
 
-To confirm that the new **MySQL** data folder is properly set, open *My*SQL* cli with the following command:
+To confirm that the new **MySQL** data folder is properly set, open **MySQL** *cli* with the following command:
 
     sudo mysql
 
