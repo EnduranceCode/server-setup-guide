@@ -60,7 +60,7 @@ Within this file, use the command `CTRL + W` to search for the directive *Server
     # Fix the Apache AH00558 configuration error
     ServerName localhost
 
-Save the changes with the command `CTRL + O` and then exit the [nano text editor](https://www.nano-editor.org/) with the command `CTRL + X`.
+Save the changes with the command `CTRL + O` and then exit the [*nano text editor*](https://www.nano-editor.org/) with the command `CTRL + X`.
 
 After making the above mentioned modifications in the **Apache Server** configuration, validate it with the following command:
 
@@ -164,7 +164,7 @@ Replace the ***{LABEL}*** in the below snippet as appropriate and use it to repl
 >
 > + **{SERVER_ADMIN_EMAIL}** : The server's admin e-mail
 
-After introducing all the changes, save the file with the command `CTRL + O` and then exit the [nano text editor](https://www.nano-editor.org/) with the command `CTRL + X`.
+After introducing all the changes, save the file with the command `CTRL + O` and then exit the [*nano text editor*](https://www.nano-editor.org/) with the command `CTRL + X`.
 
 Validate the **Apache Server** configuration with the following command:
 
@@ -195,38 +195,43 @@ A good solution for this problem is to use the **Apache Server** **user** and **
 
     apachectl -S
 
-### 2.6.1. Standard permissions for the Apache Server root folder
-
-Assuming that `www-data` is indeed the **user** that runs **Apache Server**, set the [file permissions](https://linuxize.com/post/umask-command-in-linux/) for the server root folder with the following commands:
+Assuming that `www-data` is indeed the **user** that runs **Apache Server**, set the **owner** and **group** of the **Apache Server** root folder to `www-data` with the following command:
 
     sudo chown -R www-data:www-data /srv/www
-    sudo find /srv/www -type d -exec chmod -c 2770 {} +
-    sudo find /srv/www -type f -exec chmod -c 660 {} +
 
-The `ùmask` has to be set accordingly the permissions level set with above command, therefore it must be set to `007`. To check the current `umask`value, execute the following command:
+### 2.6.1. Standard permissions for the Apache Server root folder
+
+Set the [file permissions](https://linuxize.com/post/umask-command-in-linux/) for the server root folder with the following commands:
+
+    sudo find /srv/www -type d -exec chmod -c 2755 {} +
+    sudo find /srv/www -type f -exec chmod -c 644 {} +
+
+The `umask` has to be set accordingly the permissions level set with above command, therefore it must be set to `022`. To check the current `umask`value, execute the following command:
 
     umask
 
-To [permanently set the `umask` value](https://linuxize.com/post/umask-command-in-linux/#setting-the-mask-value) system-wide, open the `/etc/profile` file with [*nano text editor](https://www.nano-editor.org/) using the following command:
+To [permanently set the `umask` value](https://linuxize.com/post/umask-command-in-linux/#setting-the-mask-value) system-wide, open the `/etc/profile` file with [*nano text editor*](https://www.nano-editor.org/) using the following command:
 
     sudo nano /etc/profile
 
 Within `/etc/profile` file, add the below snippet at the beginning of the file.
 
-    umask 007
+    umask 022
 
 To make the modifications effective, execute the following commands:
 
     source /etc/profile
     source ~/.bashrc
 
-To verify if the new settings are working as intended, execute the below commands to create a new file and a new directory and then check its listed permissions.
+To verify if the new `umask` settings are working as intended, execute the below commands to create a new file and a new directory and then check its listed permissions.
 
     mkdir /tmp/newfolder
     touch /tmp/newfile
     ls --group-directories-first -la /tmp
 
-To give a user writing permissions on the **Apache Server** root folder it's now necessary to add him to the `www-data` group. Do that, replacing the ***{LABEL}*** in the below command as appropriate and then execute it.
+### 2.6.2. Add writing permissions on the Apache Server root folder to a regular user
+
+With the standard permissions for the **Apache Server root** folder set as described above, a regular user won't have writing permissions on the **Apache Server root** folder. To give a user writing permissions on the **Apache Server** root folder it's now necessary to add the user to the `www-data` group. Do that, replacing the ***{LABEL}*** in the below command as appropriate and then execute it.
 
     sudo usermod -aG www-data {USER}
 
@@ -239,34 +244,22 @@ As explained in [this answer](https://unix.stackexchange.com/a/11573) on [StackE
     newgrp www-data
     newgrp $USER
 
-### 2.6.2. Restricted permissions for the Apache Server root folder
+Then, add writing permissions to the **group** of the **Apache Server** root folder with the following commands:
 
-In a more restrictive scenario, the **Apache Server** server should [only have writing permissions](https://www.internalpointers.com/post/right-folder-permission-website) on the folders where it is strictly necessary. On those scenarios, set the [file permissions](https://linuxize.com/post/umask-command-in-linux/) for the server root folder with the following commands:
+    sudo find /srv/www -type d -exec chmod -c 2770 {} +
+    sudo find /srv/www -type f -exec chmod -c 660 {} +
 
-    sudo chown -R root:www-data /srv/www
-    sudo find /srv/www -type d -exec chmod -c 2750 {} +
-    sudo find /srv/www -type f -exec chmod -c 650 {} +
-
-For the folders that must be writable by the **Apache Server**, replace the ***{LABELS}*** in the below commands as appropriate and execute it for each folder that has to be writable by the **Apache Server**
-
-    sudo find /srv/www/{WRITABLE_FOLDER} -type d -exec chmod -c 2750 {} +
-    sudo find /srv/www/{WRITABLE_FOLDER} -type f -exec chmod -c 650 {} +
-
-> **Labels Definition**
->
-> + **{WRITABLE_FOLDER}** : The folder that must be writable by the **Apache Server**
-
-The `ùmask` has to be set accordingly the permissions level set with above command, therefore it must be set to `027`. To check the current `umask`value, execute the following command:
+The `umask` has to be set accordingly the permissions level set with above command, therefore it must be set to `002`. To check the current `umask`value, execute the following command:
 
     umask
 
-To [permanently set the `umask` value](https://linuxize.com/post/umask-command-in-linux/#setting-the-mask-value) system-wide, open the `/etc/profile` file with [*nano text editor](https://www.nano-editor.org/) using the following command:
+To [permanently set the `umask` value](https://linuxize.com/post/umask-command-in-linux/#setting-the-mask-value) system-wide, open the `/etc/profile` file with [*nano text editor*](https://www.nano-editor.org/) using the following command:
 
     sudo nano /etc/profile
 
 Within `/etc/profile` file, add the below snippet at the beginning of the file.
 
-    umask 027
+    umask 002
 
 For the changes to take effect, execute the following commands:
 
@@ -290,7 +283,7 @@ To check if the files were properly copied, check the output of the following co
 
     ls --group-directories-first -la /usr/local/bin/
 
-The file `/usr/local/bin/fixApacheWebRootPermissions.sh` might need some modifications to ensure its compatibility with the server's system. Use the below command to open the file `fixApacheWebRootPermissions.sh` with the [*nano text editor*](https://www.nano-editor.org/).
+The file `/usr/local/bin/fixApacheWebRootPermissions.sh` will probably need some modifications to ensure its compatibility with the desired **Apache Server** root folder permissions. Use the below command to open the file `fixApacheWebRootPermissions.sh` with the [*nano text editor*](https://www.nano-editor.org/).
 
     sudo nano /usr/local/bin/fixApacheWebRootPermissions.sh
 
