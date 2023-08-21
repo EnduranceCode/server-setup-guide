@@ -12,7 +12,7 @@ This file contains the **[Apache Server installation](https://www.digitalocean.c
     3. [Check the Apache Server](#23-check-the-apache-server)
     4. [Change the Apache Server web root folder](#24-change-the-apache-server-web-root-folder)
     5. [Setup the default directory to be served by Apache Web Server](#25-setup-the-default-directory-to-be-served-by-apache-web-server)
-    6. [2.6. Set permissions for the Apache Server root folder](#26-set-permissions-for-the-apache-server-root-folder)
+    6. [Set permissions for the Apache Server root folder](#26-set-permissions-for-the-apache-server-root-folder)
     7. [Keep the Apache Server root folder access permissions consistent with a cron job](#27-keep-the-apache-server-root-folder-access-permissions-consistent-with-a-cron-job)
 
 ## 2. Apache Server installation
@@ -179,7 +179,21 @@ Enable the default  Virtual Host configuration file with the following commands:
 
     sudo systemctl status apache2.service -l --no-pager
 
-To check if Apache Server running correctly, replace the ***{LABEL}*** in the below URL as appropriate and enter it into a browser’s address bar.
+To check if **Apache Server** running correctly, replace the ***{LABEL}*** in the below URL as appropriate and enter it into a browser’s address bar.
+
+      http://{SERVER_IP_ADDRESS}/
+
+> **Label Definition**
+>
+> + **{SERVER_IP_ADDRESS}** : IP Address of the server that can be obtained with the command `hostname -I` or the command `curl -4 icanhazip.com`
+
+#### 2.5.1. Customize **Apache Server** default landing page
+
+To customize **Apache Server** default landing page, download the custom `index.html` file to `/srv/www/html` with the following command:
+
+    sudo wget -P /srv/www/html/ https://raw.githubusercontent.com/EnduranceCode/server-setup-guide/master/system/srv/www/html/index.html
+
+To check if the **Apache Server** default landing page was set correctly, replace the ***{LABEL}*** in the below URL as appropriate and enter it into a browser’s address bar.
 
       http://{SERVER_IP_ADDRESS}/
 

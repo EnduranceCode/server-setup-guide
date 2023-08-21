@@ -24,7 +24,7 @@ I will be updating this guide as my knowledge and experience evolves. I will be 
     3. [Check the Apache Server](./02-apache-server-installation.md#23-check-the-apache-server)
     4. [Change the Apache Server web root folder](./02-apache-server-installation.md#24-change-the-apache-server-web-root-folder)
     5. [Setup the default directory to be served by Apache Web Server](./02-apache-server-installation.md#25-setup-the-default-directory-to-be-served-by-apache-web-server)
-    6. [2.6. Set permissions for the Apache Server root folder](./02-apache-server-installation.md#26-set-permissions-for-the-apache-server-root-folder)
+    6. [Set permissions for the Apache Server root folder](./02-apache-server-installation.md#26-set-permissions-for-the-apache-server-root-folder)
     7. [Keep the Apache Server root folder access permissions consistent with a cron job](./02-apache-server-installation.md#27-keep-the-apache-server-root-folder-access-permissions-consistent-with-a-cron-job)
 3. [MySQL Server installation](./03-mysql-server-installation.md)
     1. [Install MySQL](./03-mysql-server-installation.md#31-install-mysql)
