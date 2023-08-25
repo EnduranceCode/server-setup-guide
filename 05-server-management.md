@@ -170,8 +170,8 @@ To [create a database](https://www.mysqltutorial.org/mysql-create-database/), de
 > **Labels Definition**
 >
 > + **{DATABASE_NAME}** : The name chosen for the new database;
-> + **{CHARACTER_SET_NAME}** : The character set of the new database;
-> + **{COLLATION_NAME}** : The collation of the new database.
+> + **{CHARACTER_SET_NAME}** : The character set of the new database, e.g. `utf8mb4`;
+> + **{COLLATION_NAME}** : The collation of the new database, e.g. `utf8mb4_0900_ai_ci`.
 
 ## 5.4. MySQL | Create a MySQL user
 
