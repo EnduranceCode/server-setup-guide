@@ -260,8 +260,8 @@ As explained in [this answer](https://unix.stackexchange.com/a/11573) on [StackE
 
 Then, add writing permissions to the **group** of the **Apache Server** root folder with the following commands:
 
-    sudo find /srv/www -type d -exec chmod -c 2770 {} +
-    sudo find /srv/www -type f -exec chmod -c 660 {} +
+    sudo find /srv/www -type d -exec chmod -c 2775 {} +
+    sudo find /srv/www -type f -exec chmod -c 664 {} +
 
 The `umask` has to be set accordingly the permissions level set with above command, therefore it must be set to `002`. To check the current `umask`value, execute the following command:
 
