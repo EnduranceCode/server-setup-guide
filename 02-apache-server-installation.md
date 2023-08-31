@@ -191,7 +191,7 @@ To check if **Apache Server** running correctly, replace the ***{LABEL}*** in th
 
 To customize **Apache Server** default landing page, download the custom `index.html` file to `/srv/www/html` with the following command:
 
-    sudo wget -P /srv/www/html/ https://raw.githubusercontent.com/EnduranceCode/server-setup-guide/master/system/srv/www/html/index.html
+    sudo wget -O /srv/www/html/index.html https://raw.githubusercontent.com/EnduranceCode/server-setup-guide/master/system/srv/www/html/index.html
 
 To check if the **Apache Server** default landing page was set correctly, replace the ***{LABEL}*** in the below URL as appropriate and enter it into a browser’s address bar.
 
