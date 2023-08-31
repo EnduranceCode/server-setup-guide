@@ -141,14 +141,15 @@ If the login on the server was successful, it's now time to confirm that SSH pas
 
     sudo nano /etc/ssh/sshd_config
 
-Then, use the command `CTRL + W` to search for the directives shown on the below snippet and if necessary modify it accordingly:
+Then, use the command `CTRL + W` to search for each directives shown on the below snippet (those directives will be in different sections of the file) and if necessary modify it accordingly:
 
     PasswordAuthentication no
-    ChallengeResponseAuthentication no
+    PermitEmptyPasswords no
+    KbdInteractiveAuthentication no
     UsePAM no
     PermitRootLogin no
 
-The directive `PermitRootLogin no` will disable [SSH root login](https://www.tecmint.com/disable-or-enable-ssh-root-login-and-limit-ssh-access-in-linux/) which will enhance security because any hacker can try to brute force the root password and gain access to the system.
+Ther directive `KbdInteractiveAuthentication` [replaced the directive](https://askubuntu.com/a/1403850) `ChallengeResponseAuthentication`. The directive `PermitRootLogin no` will disable [SSH root login](https://www.tecmint.com/disable-or-enable-ssh-root-login-and-limit-ssh-access-in-linux/) which will enhance security because any hacker can try to brute force the root password and gain access to the system.
 
 Save the modifications with the command `CTRL + O` and then exit the [*nano text editor*](https://www.nano-editor.org/) with the command `CTRL + X`.
 
