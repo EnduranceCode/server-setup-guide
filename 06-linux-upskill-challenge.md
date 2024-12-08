@@ -10,7 +10,7 @@ In this section, I list the Resources & Extensions available on the [Linux Upski
 
 ## Table of Contents
 
-6. [Linux Upskill Challenge | Resources & Extensions](./06-linux-upskill-challenge-md)
+6. [Linux Upskill Challenge | Resources & Extensions](./06-linux-upskill-challenge.md)
     1. [Day 1 | Get to know your server](#61-day-1--get-to-know-your-server)
 
 ## 6. Linux Upskill Challenge | Resources & Extensions
