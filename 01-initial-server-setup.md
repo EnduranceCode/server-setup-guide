@@ -44,7 +44,7 @@ As it's more secure to login with a user other than the `root` user, replace the
 
 To enable the newly created user to perform administrative tasks, replace the ***{LABEL}*** in the below command as appropriate in the below command and use it to [add the user to the `sudo` group](https://linuxize.com/post/how-to-add-user-to-group-in-linux/).
 
-    usermod -aG sudo {USERNAME}
+    sudo usermod -aG sudo {USERNAME}
 
 > **Label Definition**
 >
@@ -91,15 +91,11 @@ Add the client's public SSH Key to the server's `authorized_keys` file (**ON THE
 >
 > + **{SSH_KEY}** : The public SSH key of the client machine obtained executing the command `cat ~/.ssh/id_rsa.pub` o**ON THE CLIENT** machine
 
-To set the proper permissions on the created directory and files, replace the ***{LABEL}*** in the below commands as appropriate and execute it.
+To set the proper permissions on the created directory and files, execute the following commands:
 
     chmod 700 ~/.ssh
     chmod 600 ~/.ssh/authorized_keys
-    chown -R {USERNAME}:{USERNAME} ~/.ssh
-
-> **Label Definition**
->
-> + **{USERNAME}** : Name of the user account on the server
+    chown -R "${USER}":"${USER}" ~/.ssh
 
 After setting the `~/.ssh` folder for the created user, log back with the root user with the following command:
 
@@ -149,7 +145,7 @@ Then, use the command `CTRL + W` to search for each directives shown on the belo
     UsePAM no
     PermitRootLogin no
 
-Ther directive `KbdInteractiveAuthentication` [replaced the directive](https://askubuntu.com/a/1403850) `ChallengeResponseAuthentication`. The directive `PermitRootLogin no` will disable [SSH root login](https://www.tecmint.com/disable-or-enable-ssh-root-login-and-limit-ssh-access-in-linux/) which will enhance security because any hacker can try to brute force the root password and gain access to the system.
+The directive `KbdInteractiveAuthentication` [replaced the directive](https://askubuntu.com/a/1403850) `ChallengeResponseAuthentication`. The directive `PermitRootLogin no` will disable [SSH root login](https://www.tecmint.com/disable-or-enable-ssh-root-login-and-limit-ssh-access-in-linux/) which will enhance security because any hacker can try to brute force the root password and gain access to the system.
 
 Save the modifications with the command `CTRL + O` and then exit the [*nano text editor*](https://www.nano-editor.org/) with the command `CTRL + X`.
 
@@ -235,9 +231,10 @@ If necessary, [install **Git**](https://help.ubuntu.com/lts/serverguide/git.html
 
 Replace the ***{LABELS}*** in the below command as appropriate and use it to set [**Git**'s global configuration](https://www.learnenough.com/git-tutorial#sec-installation_and_setup). Instructions for a more detailed **Git** global configuration can be found in [Git's Official Documentation](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup).
 
+    git config --global core.editor nano
     git config --global user.name "{USER}"
     git config --global user.email {EMAIL}
-    git config --global core.editor nano
+    git config --global pull.rebase true
     git config --list
 
 > **Labels Definition**
@@ -247,28 +244,30 @@ Replace the ***{LABELS}*** in the below command as appropriate and use it to set
 
 ### 1.8. Bash prompt customization
 
-The file [.bash_endurancecode](system/home/user/.bash_endurancecode), that's going to be used to customize the bash environment, is stored at the folder `system/home/user/` of this repository. The auxiliary files that will, eventually, be needed for this customization are stored at the folder `system/home/user/.git_prompt/` of this repository. To [copy](https://linuxize.com/post/how-to-use-scp-command-to-securely-transfer-files/) the mentioned files and folders to the user's `home` folder **ON THE SERVER**, replace the ***{LABELS}*** in the below commands as appropriate and execute it, **ON A CLIENT MACHINE**, from the root folder of this repository.
+All the files necessary to customize the bash environment, are stored at the folder `system/home/user/.bash_USER` of this repository. To [copy](https://linuxize.com/post/how-to-use-scp-command-to-securely-transfer-files/) the mentioned folder (and files) to the **SERVER** user's `home` folder, replace the ***{LABELS}*** in the below commands as appropriate and execute it, **ON A CLIENT MACHINE**, from the root folder of this repository.
 
-    scp -r system/home/user/.git_prompt/ {HOST_NAME}:~/
-    scp system/home/user/.bash_endurancecode {HOST_NAME}:~/
+    scp -r system/home/user/.bash_USER {HOST_NAME}:~/
 
 > **Label Definition**
 >
 > + **{HOST_NAME}** : Name given to the server on the SSH Config File
 
-Execute, **ON THE SERVER**, the below command to make the included bash script executable.
+The files contained in the folder `system/home/user/.bash_USER/bash_git/` of this repository were first presented to me in the course [Learn Enough Git to Be Dangerous](https://www.learnenough.com/git-tutorial/collaborating#sec-advanced_setup) and later in an [Udacity](https://www.udacity.com/) course. The most recent [**Git**](https://git-scm.com) versions (on Ubuntu) already have the features (branches in the prompt and branches names tab completion) that are implemented by the files [.git-prompt.sh](system/home/user/.bash_USER/bash_git/git-prompt.sh) and [git-completion.bash](system/home/user/.bash_USER/bash_git/git-prompt.sh). Therefore the current content of [bash_git.sh](system/home/user/.bash_USER/bash_git.sh) is not using those files.
 
-    chmod + ~/.git_prompt/.git-prompt.sh
+To be able to use the files copied in the previous step for the bash environment customization, execute, **ON THE SERVER**, the following commands:
 
-The files contained in the folder `~/.git_prompt/` were first presented to my in the course [Learn Enough Git to Be Dangerous](https://www.learnenough.com/git-tutorial/collaborating#sec-advanced_setup) and later in an [Udacity](https://www.udacity.com/) course. The [**Git**](https://git-scm.com) configuration on Ubuntu's recent versions has already the features (branches in the prompt and branches names tab completion) that are implemented by the files [.git-prompt.sh](system/home/user/.git_prompt/.git-prompt.sh) and [.git-completion.bash](system/home/user/.git_prompt/.git-completion.bash). Therefore the current content of [.bash_endurancecode](system/home/user/.bash_endurancecode) is not using those files.
+    mv .bash_USER .bash_"${USER}"
+    mv .bash_"${USER}"/bash_USER.sh .bash_"${USER}"/bash_"${USER}".sh
+    chown -R "${USER}":"${USER}" ~/.bash_"${USER}"
+    chmod -R 700 ~/.bash_"${USER}"
 
 To complete the process, it's only necessary to edit the file `.bashrc` located in the home folder and add the lines below to the end of the mentioned file.
 
     # Source the file that enables personal prompt customization and implements custom alias
     # All prompt customization alias implementation must be done in the file sourced below
     #
-    if [ -f ~/.bash_endurancecode ]; then
-        . ~/.bash_endurancecode
+    if [ -f ~/.bash_"${USER}"/bash_"${USER}".sh ]; then
+        . ~/.bash_"${USER}"/bash_"${USER}".sh
     fi
 
 Open the file `.bashrc` with [*nano text editor*](https://www.nano-editor.org/) executing the following command:
@@ -287,7 +286,7 @@ This bash customization will be effective every time the user logs in.
 
 I like to add three more folders to the server's home folder: one named `Code`, another named `Software` and another named `Templates`. The first one is used to store all my code repositories, the second is used to store all the software packages that I download and install in the system and the third one is used to store any template needed for the server management. Those folders can be created with the following command:
 
-    mkdir ~/Code && mkdir ~/Software && mkdir Templates
+    mkdir -p ~/code && mkdir -p ~/prod-files && mkdir -p ~/software && mkdir -p ~/templates
 
 To check if the new folders were properly created, execute the following command:
 
