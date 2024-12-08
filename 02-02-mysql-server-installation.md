@@ -6,14 +6,15 @@ This file contains the **[MySQL Server installation](https://www.digitalocean.co
 
 ## Table of Contents
 
-3. [MySQL Server installation](./03-mysql-server-installation.md)
-    1. [Install MySQL](#31-install-mysql)
-    2. [Configure MySQL](#32-configure-mysql)
-    3. [Move MySQL data folder](#33-move-mysql-data-folder)
+2. Software Installation
+    2. [MySQL Server installation](./03-mysql-server-installation.md)
+        1. [Install MySQL](#221-install-mysql)
+        2. [Configure MySQL](#222-configure-mysql)
+        3. [Move MySQL data folder](#223-move-mysql-data-folder)
 
-## 3. MySQL Server installation
+## 2.2. MySQL Server installation
 
-### 3.1. Install MySQL
+### 2.2.1. Install MySQL
 
 [Install](https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-22-04#step-1-installing-mysql) the [*MySQL*](https://www.mysql.com/) with the following commands:
 
@@ -36,7 +37,7 @@ And to check the network status of *MySQL*, execute the following command:
 
     sudo ss -tap | grep mysql
 
-### 3.2. Configure MySQL
+### 2.2.2. Configure MySQL
 
 As of July 2022, an error will occur while [executing the `mysql_secure_installation`](https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-22-04#step-2-configuring-mysql) script without changing the `root` user authentication method.
 
@@ -81,7 +82,7 @@ Exit the **MySQL** prompt with the following command:
 
     exit
 
-### 3.3. Move MySQL data folder
+### 2.2.3. Move MySQL data folder
 
 The instructions given here to move *MySQL* data folder were written taken in consideration the instruction on the tutorial [How To Move a MySQL Data Directory to a New Location on Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-move-a-mysql-data-directory-to-a-new-location-on-ubuntu-18-04) and [thins answer](https://dba.stackexchange.com/a/162274/138523) on [StacKExchange Database Administrators](https://dba.stackexchange.com/) which has a very small contribution of mine. ;-)
 

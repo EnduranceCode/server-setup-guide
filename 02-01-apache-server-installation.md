@@ -6,18 +6,19 @@ This file contains the **[Apache Server installation](https://www.digitalocean.c
 
 ## Table of Contents
 
-2. [Apache Server installation](#2-apache-server-installation)
-    1. [Install Apache](#21-install-apache)
-    2. [Setup the firewall](#22-setup-the-firewall)
-    3. [Check the Apache Server](#23-check-the-apache-server)
-    4. [Change the Apache Server web root folder](#24-change-the-apache-server-web-root-folder)
-    5. [Setup the default directory to be served by Apache Web Server](#25-setup-the-default-directory-to-be-served-by-apache-web-server)
-    6. [Set permissions for the Apache Server root folder](#26-set-permissions-for-the-apache-server-root-folder)
-    7. [Keep the Apache Server root folder access permissions consistent with a cron job](#27-keep-the-apache-server-root-folder-access-permissions-consistent-with-a-cron-job)
+2. Software Installation
+    1. [Apache Server installation](#21-apache-server-installation)
+        1. [Install Apache](#211-install-apache)
+        2. [Setup the firewall](#212-setup-the-firewall)
+        3. [Check the Apache Server](#213-check-the-apache-server)
+        4. [Change the Apache Server web root folder](#214-change-the-apache-server-web-root-folder)
+        5. [Setup the default directory to be served by Apache Web Server](#215-setup-the-default-directory-to-be-served-by-apache-web-server)
+        6. [Set permissions for the Apache Server root folder](#216-set-permissions-for-the-apache-server-root-folder)
+        7. [Keep the Apache Server root folder access permissions consistent with a cron job](#217-keep-the-apache-server-root-folder-access-permissions-consistent-with-a-cron-job)
 
-## 2. Apache Server installation
+## 2.1. Apache Server installation
 
-### 2.1. Install Apache
+### 2.1.1. Install Apache
 
 [Install](https://www.digitalocean.com/community/tutorials/how-to-install-the-apache-web-server-on-ubuntu-22-04#step-1-installing-apache) the [**Apache Server**](https://httpd.apache.org/) with the following commands:
 
@@ -27,7 +28,7 @@ To confirm that the installation was successful and to get the installed **Apach
 
     apache2 -v
 
-### 2.2. Setup the firewall
+### 2.1.2. Setup the firewall
 
 List the [*ufw*](https://launchpad.net/ufw) application profiles wit the following command:
 
@@ -45,7 +46,7 @@ Check again the firewall status with the following command:
 
     sudo ufw status
 
-### 2.3. Check the Apache Server
+### 2.1.3. Check the Apache Server
 
 [Check](https://www.digitalocean.com/community/tutorials/how-to-install-the-apache-web-server-on-ubuntu-22-04#step-3-checking-your-web-server) if the **Apache Server** service is active with the following command:
 
@@ -82,7 +83,7 @@ To check if Apache Server is running correctly, replace the ***{LABEL}*** in the
 >
 > + **{SERVER_IP_ADDRESS}** : IP Address of the server that can be obtained with the command `hostname -I` or the command `curl -4 icanhazip.com`
 
-### 2.4. Change the Apache Server web root folder
+### 2.1.4. Change the Apache Server web root folder
 
 By default, the **Apache Server** root folder (where the [Virtual Hosts](http://httpd.apache.org/docs/current/vhosts/) are stored) is the folder `/var/www/` but I prefer to use the folder `/srv/www/` instead. To create this folder, execute the following commands:
 
@@ -134,7 +135,7 @@ If everything is correct, make the changes effective, running the following comm
     sudo systemctl status apache2.service -l --no-pager
     apachectl -S
 
-### 2.5. Setup the default directory to be served by Apache Web Server
+### 2.1.5. Setup the default directory to be served by Apache Web Server
 
 The directory `/srv/www` will be used as parent directory of all Virtual Hosts on the server, but the directory `/var/www/html` will be moved to `/srv/www/` to serve as the default directory that is served if a client request doesn’t match any other sites.
 
@@ -187,7 +188,7 @@ To check if **Apache Server** running correctly, replace the ***{LABEL}*** in th
 >
 > + **{SERVER_IP_ADDRESS}** : IP Address of the server that can be obtained with the command `hostname -I` or the command `curl -4 icanhazip.com`
 
-#### 2.5.1. Customize **Apache Server** default landing page
+#### 2.1.5.1. Customize **Apache Server** default landing page
 
 To customize **Apache Server** default landing page, download the custom `index.html` file to `/srv/www/html` with the following command:
 
@@ -201,7 +202,7 @@ To check if the **Apache Server** default landing page was set correctly, replac
 >
 > + **{SERVER_IP_ADDRESS}** : IP Address of the server that can be obtained with the command `hostname -I` or the command `curl -4 icanhazip.com`
 
-### 2.6. Set permissions for the Apache Server root folder
+### 2.1.6. Set permissions for the Apache Server root folder
 
 The default **owner** and **group** of **Apache Server** root folder is `root:root` and that is fine if the server is only serving static content. But, if server is intended to serve dynamic content, this needs to be changed. There's no absolute right way to set this configurations but [this answer](https://serverfault.com/a/357109) on [ServerFault](https://serverfault.com/) and [this other answer](https://superuser.com/a/19333) on [SuperUser](https://superuser.com/) were taken in consideration to set my own configuration.
 
@@ -213,7 +214,7 @@ Assuming that `www-data` is indeed the **user** that runs **Apache Server**, set
 
     sudo chown -R www-data:www-data /srv/www
 
-### 2.6.1. Standard permissions for the Apache Server root folder
+### 2.1.6.1. Standard permissions for the Apache Server root folder
 
 Set the [file permissions](https://linuxize.com/post/umask-command-in-linux/) for the server root folder with the following commands:
 
@@ -243,7 +244,7 @@ To verify if the new `umask` settings are working as intended, execute the below
     touch /tmp/newfile
     ls --group-directories-first -la /tmp
 
-### 2.6.2. Add writing permissions on the Apache Server root folder to a regular user
+### 2.1.6.2. Add writing permissions on the Apache Server root folder to a regular user
 
 With the standard permissions for the **Apache Server root** folder set as described above, a regular user won't have writing permissions on the **Apache Server root** folder. To give a user writing permissions on the **Apache Server** root folder it's now necessary to add the user to the `www-data` group. Do that, replacing the ***{LABEL}*** in the below command as appropriate and then execute it.
 
@@ -286,7 +287,7 @@ To verify if the new settings are working as intended, execute the below command
     touch /tmp/newfile
     ls --group-directories-first -la /tmp
 
-### 2.7. Keep the Apache Server root folder access permissions consistent with a cron job
+### 2.1.7. Keep the Apache Server root folder access permissions consistent with a cron job
 
 Over the time, there will be some inconsistencies on the permissions of the **Apache Server** root folder. On the folder `system/usr/local/bin` of this repository there are two scripts ([fixApacheWebRootPermissions.sh](system/usr/local/bin/ffixApacheWebRootPermissions.sh) and [cronJobFixApacheWebRootPermissions.sh](system/usr/local/bin/cronJobFixApacheWebRootPermissions.sh)) that resets the chosen permissions on the **Apache Server** root folder. To [download and make these scripts executable and available on the system](https://help.ubuntu.com/community/HowToAddaLauncher) start by downloading it to the `/usr/local/bin` folder with the following commands:
 

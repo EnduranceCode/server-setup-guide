@@ -4,17 +4,18 @@
 
 This file contains the **[PHP installation](https://www.digitalocean.com/community/tutorials/how-to-install-php-8-1-and-set-up-a-local-development-environment-on-ubuntu-22-04)** section of [my personal guide to setup an Ubuntu server](https://github.com/EnduranceCode/server-setup-guide). The introduction to this guide as well as its full *Table of Contents* can be found on the [README.md](./README.md) file of this repository. The *Table of Contents* of this section is listed below.
 
-4. [PHP installation](./04-php-installation.md)
-    1. [Install PHP](#41-install-php)
-    2. [Install PHP extensions](#42-install-php-extensions)
-    3. [Install FastCGI Process Manager (FPM)](#43-install-fastcgi-process-manager-fpm)
-    4. [PHP configuration improvements](#44-php-configuration-improvements)
+2. Software Installation
+    3. [PHP installation](./02-03-php-installation.md)
+        1. [Install PHP](#231-install-php)
+        2. [Install PHP extensions](#232-install-php-extensions)
+        3. [Install FastCGI Process Manager (FPM)](#233-install-fastcgi-process-manager-fpm)
+        4. [PHP configuration improvements](#234-php-configuration-improvements)
 
-## 4. PHP installation
+## 2.3. PHP installation
 
-### 4.1. Install PHP
+### 2.3.1. Install PHP
 
-#### 4.1.1. Install the default PHP version available on Ubuntu's repositories
+#### 2.3.1.1. Install the default PHP version available on Ubuntu's repositories
 
 [Install](https://www.digitalocean.com/community/tutorials/how-to-install-php-8-1-and-set-up-a-local-development-environment-on-ubuntu-22-04) the [**PHP**](https://www.php.net/) server with the following commands:
 
@@ -49,7 +50,7 @@ For safety reasons, the [information about the system's current state of PHP](ht
 
     sudo rm /srv/www/html/info.php
 
-#### 4.1.2. Install a specific PHP version
+#### 2.3.1.2. Install a specific PHP version
 
 [Install](https://linux.how2shout.com/how-to-install-php-7-4-on-ubuntu-22-04-lts-jammy-linux/) a specific version of the [**PHP**](https://www.php.net/) server, replace the ***{LABEL}*** in the below commands as appropriate and execute it.
 
@@ -96,9 +97,9 @@ For safety reasons, the [information about the system's current state of PHP](ht
 
     sudo rm /srv/www/html/info.php
 
-### 4.2. Install PHP extensions
+### 2.3.2. Install PHP extensions
 
-#### 4.2.1. Install PHP extensions of the default PHP version available on Ubuntu's repositories
+#### 2.3.2.1. Install PHP extensions of the default PHP version available on Ubuntu's repositories
 
 **PHP** extensions are compiled libraries that extend the core functionality of this scripting language. Extensions are available as packages and can be easily installed with the `apt` command. Extensions like `libapache2-mod-php` and `php-mysql` are fundamental to run **PHP** in conjunction with the *Apache Server* and *MySQL* but there are a few more that are also quite useful. Based on the research I've made, I choose to install the following set of **PHP** extensions:
 
@@ -148,7 +149,7 @@ For safety reasons, the [information about the system's current state of PHP](ht
 
     sudo rm /srv/www/html/info.php
 
-#### 4.2.2. Install PHP extensions of a specific PHP version
+#### 2.3.2.2. Install PHP extensions of a specific PHP version
 
 **PHP** extensions are compiled libraries that extend the core functionality of this scripting language. Extensions are available as packages and can be easily installed with the `apt` command. Extensions like `libapache2-mod-php` and `php-mysql` are fundamental to run **PHP** in conjunction with the *Apache Server* and *MySQL* but there are a few more that are also quite useful. Based on the research I've made, I choose to install the following set of **PHP** extensions:
 
@@ -202,9 +203,9 @@ For safety reasons, the [information about the system's current state of PHP](ht
 
     sudo rm /srv/www/html/info.php
 
-### 4.3. Install FastCGI Process Manager (FPM)
+### 2.3.3. Install FastCGI Process Manager (FPM)
 
-#### 4.3.1. Install FastCGI Process Manager (FPM) for the default PHP version available on Ubuntu's repositories
+#### 2.3.3.1. Install FastCGI Process Manager (FPM) for the default PHP version available on Ubuntu's repositories
 
 To install [FastCGI Process Manager (FPM)](https://www.php.net/manual/en/install.fpm.php), execute the following command:
 
@@ -235,7 +236,7 @@ For safety reasons, the [information about the system's current state of PHP](ht
 
     sudo rm /srv/www/html/info.php
 
-#### 4.3.2. Install FastCGI Process Manager (FPM) for a specific PHP version
+#### 2.3.3.2. Install FastCGI Process Manager (FPM) for a specific PHP version
 
 To install [FastCGI Process Manager (FPM)](https://www.php.net/manual/en/install.fpm.php), replace the ***{LABEL}*** in the below commands as appropriate and execute it.
 
@@ -274,7 +275,7 @@ For safety reasons, the [information about the system's current state of PHP](ht
 
     sudo rm /srv/www/html/info.php
 
-### 4.4. PHP configuration improvements
+### 2.3.4. PHP configuration improvements
 
 **PHP** has (at least) three configuration files (`php.ini`) that, depending on its purposes, have three different locations. Those [three locations](https://askubuntu.com/a/356990) are the following:
 
