@@ -24,14 +24,15 @@ reset="\[\033[0m\]"
 
 # Custom the Bash prompt
 #
-# '\u'            adds the name of the current user to the prompt
-# '\$(__git_ps1)' adds git-related stuff
-# '\W'            adds the name of the current directory
+# '\h'              add the hostname up to the first '.'
+# '\u'              adds the name of the current user to the prompt
+# '\$(__git_ps1)'   adds git-related stuff
+# '\W'              adds the name of the current directory
 #
 # Further reading in https://www.cyberciti.biz/tips/howto-linux-unix-bash-shell-setup-prompt.html
 # Newline in Bash Windows solved with "JustoGotcha" comment on Stack Overflow answer https://stackoverflow.com/a/21561763
 #
-export PS1="$magenta\h$reset"$'\n'"$green\u$reset:$red\W$yellow\$(__git_ps1) $reset"$'\n'"$red$ $reset"
+export PS1="$brightMagenta[\h]$reset:$green\u$reset:$red\W$yellow\$(__git_ps1) $reset"$'\n'"$red$ $reset"
 
 # Enable git tab completion for branch names
 #
