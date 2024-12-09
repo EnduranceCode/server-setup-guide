@@ -7,6 +7,7 @@ This file contains the **Server management** section of [my personal guide to se
 ## Table of Contents
 
 3. Server Management
+
     2. [MySQL Server management](#32-mysql-server-management)
         1. [MySQL | Create a MySQL database](#321-mysql--create-a-mysql-database)
         2. [MySQL | Create a MySQL user](#322-mysql--create-a-mysql-user)

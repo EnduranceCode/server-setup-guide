@@ -7,6 +7,7 @@ This file contains the **[Apache Server installation](https://www.digitalocean.c
 ## Table of Contents
 
 2. Software Installation
+
     1. [Apache Server installation](#21-apache-server-installation)
         1. [Install Apache](#211-install-apache)
         2. [Setup the firewall](#212-setup-the-firewall)

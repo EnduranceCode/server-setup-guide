@@ -7,6 +7,7 @@ This file contains the **[MySQL Server installation](https://www.digitalocean.co
 ## Table of Contents
 
 2. Software Installation
+
     2. [MySQL Server installation](./03-mysql-server-installation.md)
         1. [Install MySQL](#221-install-mysql)
         2. [Configure MySQL](#222-configure-mysql)

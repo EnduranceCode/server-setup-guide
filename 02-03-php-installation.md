@@ -5,6 +5,7 @@
 This file contains the **[PHP installation](https://www.digitalocean.com/community/tutorials/how-to-install-php-8-1-and-set-up-a-local-development-environment-on-ubuntu-22-04)** section of [my personal guide to setup an Ubuntu server](https://github.com/EnduranceCode/server-setup-guide). The introduction to this guide as well as its full *Table of Contents* can be found on the [README.md](./README.md) file of this repository. The *Table of Contents* of this section is listed below.
 
 2. Software Installation
+
     3. [PHP installation](./02-03-php-installation.md)
         1. [Install PHP](#231-install-php)
         2. [Install PHP extensions](#232-install-php-extensions)

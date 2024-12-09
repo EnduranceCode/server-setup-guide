@@ -7,6 +7,7 @@ This file contains the **Server management** section of [my personal guide to se
 ## Table of Contents
 
 3. Server Management
+
     1. [Apache Server management](#31-apache-server-management)
         1. [Apache | Create a Virtual Host](#311-apache--create-a-virtual-host)
         2. [Apache | Secure Apache with Let's Encrypt](#312-apache--secure-apache-with-lets-encrypt)
