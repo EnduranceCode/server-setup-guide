@@ -38,6 +38,9 @@ I will be updating this guide as my knowledge and experience evolves. I will be 
         4. [PHP configuration improvements](./02-03-php-installation.md#234-php-configuration-improvements)
     4. [Docker installation](./02-04-docker-installation.md)
         1. [Install Docker](./02-04-docker-installation.md#241-install-docker)
+    5. [linkding installation](./02-05-linkding-installation.md)
+        1. [Install linkding](./02-05-linkding-installation.md#251-install-linkding)
+        2. [Reverse Proxy Setup](./02-05-linkding-installation.md#252-reverse-proxy-setup)
 3. Server Management
     1. [Apache Server Management](./03-01-apache-server-management.md)
         1. [Apache | Create a Virtual Host](./03-01-apache-server-management.md#311-apache--create-a-virtual-host)

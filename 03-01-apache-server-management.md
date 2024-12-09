@@ -18,8 +18,8 @@ This file contains the **Server management** section of [my personal guide to se
 
 To create the folder for the default Virtual Host, replace the ***{LABEL}*** in the below commands as appropriate and then execute it.
 
-    mkdir /srv/www/{VIRTUAL_HOST_FOLDER}
-    fixApacheWebRootPermissions.sh
+    sudo mkdir /srv/www/{VIRTUAL_HOST_FOLDER}
+    sudo fixApacheWebRootPermissions.sh
 
 > **Label Definition**
 >
@@ -27,7 +27,7 @@ To create the folder for the default Virtual Host, replace the ***{LABEL}*** in 
 
 Copy the file `virtual-host-template.conf` stored at the folder [`/system/apache2/sites-available/`](./system/apache2/sites-available/) of this repository to the server's folder `/etc/apache2/sites-available/` with the following command:
 
-    sudo wget -P /etc/apache2/sites-available/ https://raw.githubusercontent.com/EnduranceCode/server-setup-guide/master/system/apache2/sites-available/virtual-host-template.conf
+    sudo wget -P /etc/apache2/sites-available/ https://raw.githubusercontent.com/EnduranceCode/server-setup-guide/refs/heads/master/system/etc/apache2/sites-available/virtual-host-template.conf
 
 To rename the file copied with the above command, replace the ***{LABEL}*** in the below command as appropriate and then execute it.
 
@@ -45,7 +45,7 @@ To customize the default Virtual Host configuration file, replace the ***{LABEL}
 >
 > + **{VIRTUAL_HOST_FOLDER}** : The [*Second-level domain*](https://en.wikipedia.org/wiki/Second-level_domain) of the new Virtual Host
 
-Within the file, use the command `CTRL + \` to replace the existing labels as explained below.
+Within the file, use the command `CTRL + \` to replace the existing ***{LABELS}*** as explained below.
 
 + **{VIRTUAL_HOST_FOLDER}** : The [*Second-level domain*](https://en.wikipedia.org/wiki/Second-level_domain) of the new Virtual Host
 + **{VIRTUAL_HOST_TLD}** : The [TLD](https://en.wikipedia.org/wiki/Top-level_domain) of the new Virtual Host
@@ -91,7 +91,7 @@ Within the file, replace the ***{LABELS}*** in the below snippet as appropriate 
 
 After making all the necessary changes, save the file with the command `CTRL + O` and then exit the [*nano text editor*](https://www.nano-editor.org/) with the command `CTRL + X`. Then, replace the ***{LABELS}*** as appropriate in the below URL and enter it into a browser’s address bar in the local computer where the `hosts` file was edited.
 
-      http://VIRTUAL_HOST_FOLDER}.{VIRTUAL_HOST_TLD}
+      http://{VIRTUAL_HOST_FOLDER}.{VIRTUAL_HOST_TLD}
 
 > **Labels Definition**
 >
@@ -128,7 +128,11 @@ The [SSL certificate](https://www.digicert.com/what-is-an-ssl-certificate) insta
 + Request to share the e-mail address with the Electronic Frontier Foundation;
 + List of domains to activate HTTPS for.
 
-After this step, **Certbot**’s configuration is finished and the installation script will present some final remarks about the new certificate and where to locate the generated files.
+After this step, **Certbot**’s configuration is finished, the installation script will present some final remarks about the new certificate and where to find the generated files.
+
+Restart the [*Apache Server*](https://httpd.apache.org/) to apply the updated configuration, executing the following command:
+
+    sudo systemctl restart apache2
 
 To test the new SSL certificate, replace the ***{LABELS}*** in the below URL as appropriate and enter it into a browser’s address bar.
 

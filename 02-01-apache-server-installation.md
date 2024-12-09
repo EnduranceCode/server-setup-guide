@@ -181,7 +181,7 @@ Enable the default  Virtual Host configuration file with the following commands:
 
     sudo systemctl status apache2.service -l --no-pager
 
-To check if **Apache Server** running correctly, replace the ***{LABEL}*** in the below URL as appropriate and enter it into a browser’s address bar.
+To check if **Apache Server** is running correctly, replace the ***{LABEL}*** in the below URL as appropriate and enter it into a browser’s address bar.
 
       http://{SERVER_IP_ADDRESS}/
 

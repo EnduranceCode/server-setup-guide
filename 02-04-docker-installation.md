@@ -36,7 +36,7 @@ Install the latest version of the [**Docker**](https://www.docker.com/)'s packag
 
 By default, the `docker` command can only be executed by the `root` user or by a user in the `docker` group, which is automatically created during the [**Docker**](https://www.docker.com/)'s installation process. Read the output of the upcoming command to check if your user belongs to the `docker` group.
 
-    goups
+    groups
 
  If your user doesn't belong to the `docker` group, add it with the following command:
 
@@ -46,7 +46,7 @@ Log out and log back in so that your group membership is re-evaluated, or run th
 
     newgrp docker
 
-Verify that your user was added to the `docker` group by reading the output of the `goups`.
+Verify that your user was added to the `docker` group by reading the output of the `groups`.
 
 Check the installed versions using the following commands
 
