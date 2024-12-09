@@ -36,6 +36,8 @@ I will be updating this guide as my knowledge and experience evolves. I will be 
         2. [Install PHP extensions](./02-03-php-installation.md#232-install-php-extensions)
         3. [Install FastCGI Process Manager (FPM)](./02-03-php-installation.md#233-install-fastcgi-process-manager-fpm)
         4. [PHP configuration improvements](./02-03-php-installation.md#234-php-configuration-improvements)
+    4. [Docker installation](./02-04-docker-installation.md)
+        1. [Install Docker](./02-04-docker-installation.md#241-install-docker)
 3. Server Management
     1. [Apache Server Management](./03-01-apache-server-management.md)
         1. [Apache | Create a Virtual Host](./03-01-apache-server-management.md#311-apache--create-a-virtual-host)
