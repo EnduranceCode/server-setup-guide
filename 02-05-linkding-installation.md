@@ -2,13 +2,14 @@
 
 ## Introduction
 
-This file contains the **[linkding](https://linkding.link/)** section of [my personal guide to setup an Ubuntu server](https://github.com/EnduranceCode/server-setup-guide). The introduction to this guide as well as its full *Table of Contents* can be found on the [README.md](./README.md) file of this repository. The *Table of Contents* of this section is listed below.
+This file contains the [**linkding**](https://linkding.link/) section of [my personal guide to setup an Ubuntu server](https://github.com/EnduranceCode/server-setup-guide). The introduction to this guide as well as its full *Table of Contents* can be found on the [README.md](./README.md) file of this repository. The *Table of Contents* of this section is listed below.
 
 2. Software Installation
 
     5. [linkding installation](./02-05-linkding-installation.md)
         1. [Install linkding](#251-install-linkding)
-        2. [linkding Reverse Proxy Setup](#252-reverse-proxy-setup)
+        2. [Reverse Proxy Setup](#252-reverse-proxy-setup)
+        3. [Create and set an SSL Certificate](#253-create-and-set-an-ssl-certificate)
 
 ## 2.5. linkding installation
 
@@ -28,7 +29,7 @@ The folder `/opt/linkding/docker-files`will contain the files necessary to deplo
 >
 > + **{USERNAME}** : The user that will deploy linkding
 
-We will create a user to manage the [**linkding**](https://linkding.link/) [Docker](https://www.docker.com/) deployed application and set it as the owner of the folder `/opt/linkding/data/`. To create this user and set it as the owner of the folder `/opt/linkding/data/`, execute the following commands:
+We will create a user to manage the [**linkding**](https://linkding.link/) app deployed with [Docker](https://www.docker.com/) and set it as the owner of the folder `/opt/linkding/data/`. To create this user and set it as the owner of the folder `/opt/linkding/data/`, execute the following commands:
 
     sudo useradd -r -s /usr/sbin/nologin linkding
     sudo chown -R linkding:linkding /opt/linkding/data/
@@ -47,7 +48,7 @@ Open the files `docker-compose.yml` and `.env` with the [*nano text editor*](htt
 
 To complete the deployment of [**linkding**](https://linkding.link/), execute the following command:
 
-    docker compose up -d
+    docker compose -p linkding up -d
 
 The output of the above command should show that [**linkding**](https://linkding.link/) was deployed with success. For a second confirmation, check the output of the following command:
 
@@ -121,7 +122,11 @@ After creating the necessary [DNS Records](https://docs.digitalocean.com/product
 
     sudo wget -P /etc/apache2/sites-available/ https://raw.githubusercontent.com/EnduranceCode/server-setup-guide/refs/heads/master/system/etc/apache2/sites-available/virtual-host-reverse-proxy-template.conf
 
-When customizing the Virtual Host configuration file downloaded with the previous command, besides replacing the ***{LABELS}*** listed on the [provided instructions](./03-01-apache-server-management.md#211-install-apache), replace also the label ***{LD_HOST_PORT}*** with the value set on the [.env](./system/opt/linkding/docker-files/.env) file.
+When customizing the Virtual Host configuration file downloaded with the previous command, besides replacing the ***{LABELS}*** listed on the [provided instructions](./03-01-apache-server-management.md#211-install-apache), replace also the label ***{HOST_PORT}*** with the value set on the [.env](./system/opt/linkding/docker-files/.env) file for the `HOST_PORT` variable.
+
+Check if it's necessary any further modifications, implement it if necessary and when everything is done, save the file with the command `CTRL + O` and then exit the [*nano text editor*](https://www.nano-editor.org/) with the command `CTRL + X`. Then, proceed with the creation of a Virtual Host, following the [instructions available in this repository](./03-01-apache-server-management.md#311-apache--create-a-virtual-host).
+
+### 2.5.3. Create and set an SSL Certificate
 
 If [*Certbot*](https://certbot.eff.org/instructions?ws=apache&os=ubuntufocal) isn't yet installed on you server, install it and set the SSL certificate for the [**linkding**](https://linkding.link/) instance domain (or a subdomain) following the [instructions available in this repository](./03-01-apache-server-management.md#312-apache--secure-apache-with-lets-encrypt). If you already have SSL Certifcates installed on your server with [*Certbot*](https://certbot.eff.org/instructions?ws=apache&os=ubuntufocal), you can expand it to include the new domain or you can create a separate certificate for the new domain.
 

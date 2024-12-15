@@ -41,6 +41,11 @@ I will be updating this guide as my knowledge and experience evolves. I will be 
     5. [linkding installation](./02-05-linkding-installation.md)
         1. [Install linkding](./02-05-linkding-installation.md#251-install-linkding)
         2. [Reverse Proxy Setup](./02-05-linkding-installation.md#252-reverse-proxy-setup)
+        3. [Create and set an SSL Certificate](./02-05-linkding-installation.md#253-create-and-set-an-ssl-certificate)
+    6. [traggo installation](./02-06-traggo-installation.md)
+        1. [Install traggo](./02-06-traggo-installation.md#261-install-traggo)
+        2. [Reverse Proxy Setup](./02-06-traggo-installation.md#262-reverse-proxy-setup)
+        3. [Create and set an SSL Certificate](./02-06-traggo-installation.md#263-create-and-set-an-ssl-certificate)
 3. Server Management
     1. [Apache Server Management](./03-01-apache-server-management.md)
         1. [Apache | Create a Virtual Host](./03-01-apache-server-management.md#311-apache--create-a-virtual-host)

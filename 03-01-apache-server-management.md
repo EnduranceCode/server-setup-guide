@@ -136,7 +136,7 @@ Restart the [*Apache Server*](https://httpd.apache.org/) to apply the updated co
 
 To test the new SSL certificate, replace the ***{LABELS}*** in the below URL as appropriate and enter it into a browser’s address bar.
 
-      http://VIRTUAL_HOST_FOLDER}.{VIRTUAL_HOST_TLD}
+      http://{VIRTUAL_HOST_FOLDER}.{VIRTUAL_HOST_TLD}
 
 > **Labels Definition**
 >
