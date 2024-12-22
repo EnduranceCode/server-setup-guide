@@ -244,24 +244,29 @@ Replace the ***{LABELS}*** in the below command as appropriate and use it to set
 
 ### 1.8. Bash prompt customization
 
-All the files necessary to customize the bash environment, are stored at the folder `system/home/user/.bash_USER` of this repository. To [copy](https://linuxize.com/post/how-to-use-scp-command-to-securely-transfer-files/) the mentioned folder (and files) to the **SERVER** user's `home` folder, replace the ***{LABELS}*** in the below commands as appropriate and execute it, **ON A CLIENT MACHINE**, from the root folder of this repository.
+All the files necessary to customize the bash environment, are stored at the folder `root/home/user/.bash_USER` of the [system-configuration-files](https://github.com/EnduranceCode/system-configuration-files) repository. The easiest way to use the files on the referred repository is to start by cloning it to your local machine. Do it with the execution of the following command:
 
-    scp -r system/home/user/.bash_USER {HOST_NAME}:~/
+    git clone https://github.com/EnduranceCode/system-configuration-files.git
+
+To [copy](https://linuxize.com/post/how-to-use-scp-command-to-securely-transfer-files/) the mentioned folder (and files) to the **SERVER** user's `home` folder, replace the ***{LABELS}*** in the below commands as appropriate and execute it, **ON A CLIENT MACHINE**.
+
+    scp -r {SYSTEM_CONFIGURATION_FILES_REPOSITORY_ROOT_FOLDER}/root/home/user/.bash_USER {HOST_NAME}:~/
 
 > **Label Definition**
 >
+> + **{SYSTEM_CONFIGURATION_FILES_REPOSITORY_ROOT_FOLDER}** : Path to the system-configuration-files repository root folder
 > + **{HOST_NAME}** : Name given to the server on the SSH Config File
 
-The files contained in the folder `system/home/user/.bash_USER/bash_git/` of this repository were first presented to me in the course [Learn Enough Git to Be Dangerous](https://www.learnenough.com/git-tutorial/collaborating#sec-advanced_setup) and later in an [Udacity](https://www.udacity.com/) course. The most recent [**Git**](https://git-scm.com) versions (on Ubuntu) already have the features (branches in the prompt and branches names tab completion) that are implemented by the files [.git-prompt.sh](system/home/user/.bash_USER/bash_git/git-prompt.sh) and [git-completion.bash](system/home/user/.bash_USER/bash_git/git-prompt.sh). Therefore the current content of [bash_git.sh](system/home/user/.bash_USER/bash_git.sh) is not using those files.
+The files contained in the folder `root/home/user/.bash_USER/bash_git/` of the [system-configuration-files](https://github.com/EnduranceCode/system-configuration-files) repository, were first presented to me in the course [Learn Enough Git to Be Dangerous](https://www.learnenough.com/git-tutorial/collaborating#sec-advanced_setup) and later in an [Udacity](https://www.udacity.com/) course. The most recent [**Git**](https://git-scm.com) versions (on Ubuntu) already have the features (branches in the prompt and branches names tab completion) that are implemented by the files [.git-prompt.sh](https://github.com/EnduranceCode/system-configuration-files/blob/master/root/home/user/.bash_USER/bash_git/git-prompt.sh) and [git-completion.bash](https://github.com/EnduranceCode/system-configuration-files/blob/master/root/home/user/.bash_USER/bash_git/git-completion.bash). Therefore the current content of [bash_git.sh](https://github.com/EnduranceCode/system-configuration-files/blob/master/root/home/user/.bash_USER/bash_git.sh) is not using those files.
 
 To be able to use the files copied in the previous step for the bash environment customization, execute, **ON THE SERVER**, the following commands:
 
-    mv .bash_USER .bash_"${USER}"
-    mv .bash_"${USER}"/bash_USER.sh .bash_"${USER}"/bash_"${USER}".sh
+    mv ~/.bash_USER ~/.bash_"${USER}"
+    mv ~/.bash_"${USER}"/bash_USER.sh ~/.bash_"${USER}"/bash_"${USER}".sh
     chown -R "${USER}":"${USER}" ~/.bash_"${USER}"
     chmod -R 700 ~/.bash_"${USER}"
 
-To complete the process, it's only necessary to edit the file `.bashrc` located in the home folder and add the lines below to the end of the mentioned file.
+To complete the process, it's necessary to edit the file `.bashrc` located in the home folder and add the lines below to the end of the mentioned file.
 
     # Source the file that enables personal prompt customization and implements custom alias
     # All prompt customization alias implementation must be done in the file sourced below
