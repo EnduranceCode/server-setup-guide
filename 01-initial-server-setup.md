@@ -173,12 +173,12 @@ The [**ufw**](https://launchpad.net/ufw) firewall is installed by default on Ubu
 
     which ufw
 
-If **ufw** isn't installed, solve the problem with the following commands:
+If [**ufw**](https://launchpad.net/ufw) isn't installed, solve the problem with the following commands:
 
     sudo apt update
     sudo apt install ufw
 
-Check the status of the **ufw** service with the following command:
+Check the status of the [**ufw**](https://launchpad.net/ufw) service with the following command:
 
     sudo ufw status verbose
 
@@ -200,7 +200,7 @@ Make the necessary modifications, save it with the command `CTRL + O` and then e
 
 #### 1.6.2. Setup the default policies
 
-Setup **ufw**'s [default policies](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-with-ufw-on-ubuntu-22-04#step-2-setting-up-default-policies) with the following commands:
+Setup [**ufw**](https://launchpad.net/ufw)'s [default policies](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-with-ufw-on-ubuntu-22-04#step-2-setting-up-default-policies) with the following commands:
 
     sudo ufw default deny incoming
     sudo ufw default allow outgoing
@@ -217,7 +217,7 @@ Setup **ufw**'s [default policies](https://www.digitalocean.com/community/tutori
 
     sudo ufw enable
 
-There will be a warning stating that this command may disrupt existing SSH connections but, as the command that allows SSH connections has already been executed, it should be fine to continue. Therefore, it's safe to respond to the prompt with `Y` and enable **ufw**.
+There will be a warning stating that this command may disrupt existing SSH connections but, as the command that allows SSH connections has already been executed, it should be fine to continue. Therefore, it's safe to respond to the prompt with `Y` and enable [**ufw**](https://launchpad.net/ufw).
 
 ### 1.7. Git
 
