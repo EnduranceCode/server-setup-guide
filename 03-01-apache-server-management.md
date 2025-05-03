@@ -11,6 +11,7 @@ This file contains the **Server management** section of [my personal guide to se
     1. [Apache Server management](#31-apache-server-management)
         1. [Apache | Create a Virtual Host](#311-apache--create-a-virtual-host)
         2. [Apache | Secure Apache with Let's Encrypt](#312-apache--secure-apache-with-lets-encrypt)
+        3. [Apache | www to non-www redirection](#313-apache--www-to-non-www-redirection)
 
 ## 3.1. Apache Server management
 
@@ -48,8 +49,8 @@ To customize the default Virtual Host configuration file, replace the ***{LABEL}
 Within the file, use the command `CTRL + \` to replace the existing ***{LABELS}*** as explained below.
 
 + **{VIRTUAL_HOST_FOLDER}** : The [*Second-level domain*](https://en.wikipedia.org/wiki/Second-level_domain) of the new Virtual Host
-+ **{VIRTUAL_HOST_TLD}** : The [TLD](https://en.wikipedia.org/wiki/Top-level_domain) of the new Virtual Host
-+ **{SERVER_ADMIN_EMAIL}** : The server's admin e-mail
++ **{VIRTUAL_HOST_TLD}**    : The [TLD](https://en.wikipedia.org/wiki/Top-level_domain) of the new Virtual Host
++ **{SERVER_ADMIN_EMAIL}**  : The server's admin e-mail
 
 Check if it's necessary any further modifications, implement it if necessary and when everything is done, save the file with the command `CTRL + O` and then exit the [*nano text editor*](https://www.nano-editor.org/) with the command `CTRL + X`. Validate the **Apache Server** configuration with the following command:
 
@@ -66,12 +67,12 @@ To activate the new Virtual Host, replace the ***{LABEL}*** in the below command
 
 If the domain of the Virtual Host created with the previous procedure has already its DNS Records pointing to the server's IP address, replace the ***{LABELS}*** in the below URL as appropriate and enter it into a browser’s address bar to test the new local Virtual Host.
 
-      http://VIRTUAL_HOST_FOLDER}.{VIRTUAL_HOST_TLD}
+      http://{VIRTUAL_HOST_FOLDER}.{VIRTUAL_HOST_TLD}
 
 > **Labels Definition**
 >
 > + **{VIRTUAL_HOST_FOLDER}** : The [*Second-level domain*](https://en.wikipedia.org/wiki/Second-level_domain) of the new Virtual Host
-> + **{VIRTUAL_HOST_TLD}** : The [TLD](https://en.wikipedia.org/wiki/Top-level_domain) of the new Virtual Host
+> + **{VIRTUAL_HOST_TLD}**    : The [TLD](https://en.wikipedia.org/wiki/Top-level_domain) of the new Virtual Host
 
 If the domain of the Virtual Host created with the previous procedure doesn't have its DNS Records pointing to the server's IP address it can still [be tested by temporarily modifying the `hosts` file of a local computer](https://www.digitalocean.com/community/tutorials/how-to-set-up-apache-virtual-hosts-on-ubuntu-20-04#step-6-optional-setting-up-local-hosts-file). This will intercept any requests for the domain that has been configured with previous described procedure and point them to the server, just as the DNS system would do if the domain DNS Records were already pointing to the server's IP address. This will only work from a local computer and is only for testing purposes.
 
@@ -85,9 +86,9 @@ Within the file, replace the ***{LABELS}*** in the below snippet as appropriate 
 
 > **Labels Definition**
 >
-> + **{SERVER_IP_ADDRESS}** : IP Address of the server that can be obtained with the command `hostname -I` or the command `curl -4 icanhazip.com`
+> + **{SERVER_IP_ADDRESS}**   : IP Address of the server that can be obtained with the command `hostname -I` or the command `curl -4 icanhazip.com`
 > + **{VIRTUAL_HOST_FOLDER}** : The [*Second-level domain*](https://en.wikipedia.org/wiki/Second-level_domain) of the new Virtual Host
-> + **{VIRTUAL_HOST_TLD}** : The [TLD](https://en.wikipedia.org/wiki/Top-level_domain) of the new Virtual Host
+> + **{VIRTUAL_HOST_TLD}**    : The [TLD](https://en.wikipedia.org/wiki/Top-level_domain) of the new Virtual Host
 
 After making all the necessary changes, save the file with the command `CTRL + O` and then exit the [*nano text editor*](https://www.nano-editor.org/) with the command `CTRL + X`. Then, replace the ***{LABELS}*** as appropriate in the below URL and enter it into a browser’s address bar in the local computer where the `hosts` file was edited.
 
@@ -96,7 +97,7 @@ After making all the necessary changes, save the file with the command `CTRL + O
 > **Labels Definition**
 >
 > + **{VIRTUAL_HOST_FOLDER}** : The [*Second-level domain*](https://en.wikipedia.org/wiki/Second-level_domain) of the new Virtual Host
-> + **{VIRTUAL_HOST_TLD}** : The [TLD](https://en.wikipedia.org/wiki/Top-level_domain) of the new Virtual Host
+> + **{VIRTUAL_HOST_TLD}**    : The [TLD](https://en.wikipedia.org/wiki/Top-level_domain) of the new Virtual Host
 
 ### 3.1.2. Apache | Secure Apache with Let's Encrypt
 
@@ -141,7 +142,7 @@ To test the new SSL certificate, replace the ***{LABELS}*** in the below URL as 
 > **Labels Definition**
 >
 > + **{VIRTUAL_HOST_FOLDER}** : The [*Second-level domain*](https://en.wikipedia.org/wiki/Second-level_domain) of the new Virtual Host
-> + **{VIRTUAL_HOST_TLD}** : The [TLD](https://en.wikipedia.org/wiki/Top-level_domain) of the new Virtual Host
+> + **{VIRTUAL_HOST_TLD}**    : The [TLD](https://en.wikipedia.org/wiki/Top-level_domain) of the new Virtual Host
 
 If the SSL certificate installation was successful, the site will be redirected to its HTTPS version and the browser’s security indicator will show that the site is properly secured, typically by a lock icon in the address bar.
 
@@ -162,3 +163,124 @@ This script runs twice a day and will automatically renew any certificate that�
 To test the renewal process, execute the following command:
 
     sudo certbot renew --dry-run
+
+### 3.1.3. Apache | www to non-www redirection
+
+To implement "www to non-www redirection" it's necessary to edit the Virtual Host configuration files (port `80` and port `443`). Start with port `443` Virtual Host file generated by **Certbot**, replace the ***{LABEL}*** in the below command as appropriate and then execute it to open the file with the [*nano text editor*](https://www.nano-editor.org/).
+
+    sudo nano /etc/apache2/sites-available/{VIRTUAL_HOST_FOLDER}-le-ssl.conf
+
+> **Label Definition**
+>
+> + **{VIRTUAL_HOST_FOLDER}** : The [*Second-level domain*](https://en.wikipedia.org/wiki/Second-level_domain) of the Virtual Host file to edit
+
+Within the file, remove the `ServerAlias` directive from the first block (`<VirtualHost *:443>`). The line to remove is, taking in consideration the ***{LABELS}*** definition, the following:
+
+    ServerAlias www.{VIRTUAL_HOST_FOLDER}.{VIRTUAL_HOST_TLD}
+
+> **Labels Definition**
+>
+> + **{VIRTUAL_HOST_FOLDER}** : The [*Second-level domain*](https://en.wikipedia.org/wiki/Second-level_domain) of the new Virtual Host
+> + **{VIRTUAL_HOST_TLD}**    : The [TLD](https://en.wikipedia.org/wiki/Top-level_domain) of the new Virtual Host
+
+This first block of the Virtual Host file generated by **Certbot**, will be similar to the following snippet (taking in consideration the ***{LABELS}*** definition):
+
+    <IfModule mod_ssl.c>
+    <VirtualHost *:443>
+
+            ServerName {VIRTUAL_HOST_FOLDER}.{VIRTUAL_HOST_TLD}
+
+            ServerAlias www.{VIRTUAL_HOST_FOLDER}.co{VIRTUAL_HOST_TLD}m
+
+            ServerAdmin endurancecode@gmail.{VIRTUAL_HOST_TLD}
+
+            DocumentRoot /srv/www/{VIRTUAL_HOST_FOLDER}
+
+            LogLevel info
+
+            ErrorLog ${APACHE_LOG_DIR}/error.log
+            CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+            Include /etc/letsencrypt/options-ssl-apache.conf
+            SSLCertificateFile /etc/letsencrypt/live/{VIRTUAL_HOST_FOLDER}.{VIRTUAL_HOST_TLD}/fullchain.pem
+            SSLCertificateKeyFile /etc/letsencrypt/live/{VIRTUAL_HOST_FOLDER}.{VIRTUAL_HOST_TLD}/privkey.pem
+    </VirtualHost>
+    </IfModule>
+
+> **Labels Definition**
+>
+> + **{VIRTUAL_HOST_FOLDER}** : The [*Second-level domain*](https://en.wikipedia.org/wiki/Second-level_domain) of the new Virtual Host
+> + **{VIRTUAL_HOST_TLD}**    : The [TLD](https://en.wikipedia.org/wiki/Top-level_domain) of the new Virtual Host
+
+If the file contains anything after this first block, delete and replace the ***{LABELS}*** in the below snippet as appropriate. Then add this new block, inside the same file, immediately after the already mentioned first block.
+
+    <IfModule mod_ssl.c>
+    <VirtualHost *:443>
+        ServerName www.{VIRTUAL_HOST_FOLDER}.{VIRTUAL_HOST_TLD}
+
+        Redirect permanent / https://{VIRTUAL_HOST_FOLDER}.{VIRTUAL_HOST_TLD}/
+
+        Include /etc/letsencrypt/options-ssl-apache.conf
+        SSLCertificateFile /etc/letsencrypt/live/{VIRTUAL_HOST_FOLDER}.{VIRTUAL_HOST_TLD}/fullchain.pem
+        SSLCertificateKeyFile /etc/letsencrypt/live/{VIRTUAL_HOST_FOLDER}.{VIRTUAL_HOST_TLD}/privkey.pem
+    </VirtualHost>
+    </IfModule>
+
+> **Labels Definition**
+>
+> + **{VIRTUAL_HOST_FOLDER}** : The [*Second-level domain*](https://en.wikipedia.org/wiki/Second-level_domain) of the new Virtual Host
+> + **{VIRTUAL_HOST_TLD}**    : The [TLD](https://en.wikipedia.org/wiki/Top-level_domain) of the new Virtual Host
+
+After making all the necessary changes, save the file with the command `CTRL + O` and then exit the [*nano text editor*](https://www.nano-editor.org/) with the command `CTRL + X`. Validate the **Apache Server** configuration with the following command:
+
+    sudo apachectl configtest
+
+If the configuration is correct, it's then time to edit the port `80` Virtual Host file. Replace the ***{LABEL}*** in the below command as appropriate and then execute it to open the file with the [*nano text editor*](https://www.nano-editor.org/).
+
+    sudo nano /etc/apache2/sites-available/{VIRTUAL_HOST_FOLDER}.conf
+
+> **Label Definition**
+>
+> + **{VIRTUAL_HOST_FOLDER}** : The [*Second-level domain*](https://en.wikipedia.org/wiki/Second-level_domain) of the Virtual Host file to edit
+
+Within the file, remove the block similar to the following snippet (taking in consideration the ***{LABELS}*** definition):
+
+    RewriteEngine on
+    RewriteCond %{SERVER_NAME} ={VIRTUAL_HOST_FOLDER}.{VIRTUAL_HOST_TLD} [OR]
+    RewriteCond %{SERVER_NAME} =www.{VIRTUAL_HOST_FOLDER}.{VIRTUAL_HOST_TLD}
+    RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
+
+> **Labels Definition**
+>
+> + **{VIRTUAL_HOST_FOLDER}** : The [*Second-level domain*](https://en.wikipedia.org/wiki/Second-level_domain) of the new Virtual Host
+> + **{VIRTUAL_HOST_TLD}**    : The [TLD](https://en.wikipedia.org/wiki/Top-level_domain) of the new Virtual Host
+
+After deleting the above snippet, replace the ***{LABELS}*** in the below snippet as appropriate and then paste it in the file.
+
+    RewriteEngine on
+
+    # Redirect <www.{VIRTUAL_HOST_FOLDER}.{VIRTUAL_HOST_TLD}> to <https://{VIRTUAL_HOST_FOLDER}.{VIRTUAL_HOST_TLD}>
+    RewriteCond %{HTTP_HOST} ^www\.{VIRTUAL_HOST_FOLDER}\.{VIRTUAL_HOST_TLD}$ [NC]
+    RewriteRule ^ https://{VIRTUAL_HOST_FOLDER}.{VIRTUAL_HOST_TLD}%{REQUEST_URI} [L,R=301]
+
+    # Redirect {VIRTUAL_HOST_FOLDER}.{VIRTUAL_HOST_TLD} to HTTPS (if not already)
+    RewriteCond %{HTTP_HOST} ^{VIRTUAL_HOST_FOLDER}\.{VIRTUAL_HOST_TLD}$ [NC]
+    RewriteRule ^ https://{VIRTUAL_HOST_FOLDER}.{VIRTUAL_HOST_TLD}%{REQUEST_URI} [L,R=301]
+
+> **Labels Definition**
+>
+> + **{VIRTUAL_HOST_FOLDER}** : The [*Second-level domain*](https://en.wikipedia.org/wiki/Second-level_domain) of the new Virtual Host
+> + **{VIRTUAL_HOST_TLD}**    : The [TLD](https://en.wikipedia.org/wiki/Top-level_domain) of the new Virtual Host
+
+After making all the necessary changes, save the file with the command `CTRL + O` and then exit the [*nano text editor*](https://www.nano-editor.org/) with the command `CTRL + X`. Validate the **Apache Server** configuration with the following command:
+
+    sudo apachectl configtest
+
+To activate the new Virtual Host, replace the ***{LABEL}*** in the below commands as appropriate and then execute it.
+
+    sudo a2ensite {VIRTUAL_HOST_FOLDER}.conf
+    sudo systemctl reload apache2
+
+> **Label Definition**
+>
+> + **{VIRTUAL_HOST_FOLDER}** : The [*Second-level domain*](https://en.wikipedia.org/wiki/Second-level_domain) of the new Virtual Host
