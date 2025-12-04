@@ -21,6 +21,7 @@ is listed below.
         5. [Set up the default directory to be served by Apache Web Server](#215-set-up-the-default-directory-to-be-served-by-apache-web-server)
         6. [Set permissions for the Apache Server root folder](#216-set-permissions-for-the-apache-server-root-folder)
         7. [Keep the Apache Server root folder access permissions consistent with a cron job](#217-keep-the-apache-server-root-folder-access-permissions-consistent-with-a-cron-job)
+        8. [Install & Configure ModSecurity](#218-install--configure-modsecurity)
 
 ## 2.1. Apache Server installation
 
@@ -522,3 +523,260 @@ the file. To list the cron jobs created, execute the following command:
 ```shell
 sudo crontab -l
 ```
+
+### 2.1.8. Install & Configure ModSecurity
+
+Install the Apache [ModSecurity](https://owasp.org/www-project-modsecurity/) module:
+
+```shell
+sudo apt update
+sudo apt install libapache2-mod-security2
+```
+
+Enable the ModSecurity module:
+
+```shell
+sudo a2enmod security2
+```
+
+Restart Apache to apply the changes into effect:
+
+```shell
+sudo systemctl restart apache2
+```
+
+Check if the module is loaded:
+
+```shell
+apachectl -M | grep security
+```
+
+If the output prints `security2_module`, it indicates that ModSecurity has been successfully
+installed and enabled.
+
+By default, ModSecurity runs in a passive "DetectionOnly" mode, so we need to set it to blocking
+mode:
+
+```shell
+sudo cp /etc/modsecurity/modsecurity.conf-recommended /etc/modsecurity/modsecurity.conf
+```
+
+Edit file `/etc/modsecurity/modsecurity.conf` with the
+[*nano text editor*](https://www.nano-editor.org/) to set ModSecurity to blocking mode:
+
+```shell
+sudo nano /etc/modsecurity/modsecurity.conf
+```
+
+Within the file, use the command `CTRL + W` to search for the **SecRuleEngine** directive and change
+its value from *DetectionOnly* to **On**. When finished, it must look like the following snippet:
+
+```text
+SecRuleEngine On
+```
+
+After introducing all the changes, save the file with the command `CTRL + O` and then exit the
+[*nano text editor*](https://www.nano-editor.org/) with the command `CTRL + X`.
+
+While the default package installation may include an old version of CRS, it is safer to use
+the files provided by the [OWASP CRS Project](https://coreruleset.org/) and available at the
+[OWASP CRS repository](https://github.com/coreruleset/coreruleset). Move to folder
+`/etc/modsecurity/` and clone the repository:
+
+```shell
+cd /etc/modsecurity/
+sudo git clone https://github.com/coreruleset/coreruleset.git
+```
+
+Copy and rename the repository's example configuration file so ModSecurity knows to load it:
+
+```shell
+sudo cp /etc/modsecurity/coreruleset/crs-setup.conf.example /etc/modsecurity/coreruleset/crs-setup.conf
+```
+
+To ensure that Apache is instructed to load the main ModSecurity configuration (`modsecurity.conf`),
+the new CRS setup file (`crs-setup.conf`) and all the individual attack rules (`rules/*.conf`), edit
+the file `/etc/modsecurity/modsecurity.conf` with the
+[*nano text editor*](https://www.nano-editor.org/):
+
+```shell
+sudo nano /etc/apache2/mods-enabled/security2.conf
+```
+
+Within the file, use the command `CTRL + W` to search for the **<IfModule security2_module>** block
+and update its content in order to look like the following snippet:
+
+```text
+<IfModule security2_module>
+    # Default Debian dir for modsecurity's persistent data
+    SecDataDir /var/cache/modsecurity
+
+    # Include the main ModSecurity configuration
+    IncludeOptional /etc/modsecurity/modsecurity.conf
+
+    # CRITICAL: Include the CRS setup file FIRST
+    IncludeOptional /etc/modsecurity/coreruleset/crs-setup.conf 
+
+    # CRITICAL: Include all the actual attack rules
+    IncludeOptional /etc/modsecurity/coreruleset/rules/*.conf
+</IfModule>
+```
+
+>**Note**:
+> Remove (or comment) the previous `IncludeOptional` lines that point to the default package
+> CRS rules and configuration
+
+After introducing all the changes, save the file with the command `CTRL + O` and then exit the
+[*nano text editor*](https://www.nano-editor.org/) with the command `CTRL + X`.
+
+The `crs-setup.conf` file available defines several **Paranoia Levels** that determines
+how aggressively the CRS blocks traffic. To start low and increase slowly, edit the file
+`crs-setup.conf` with the [*nano text editor*](https://www.nano-editor.org/):
+
+```shell
+sudo nano /etc/modsecurity/coreruleset/crs-setup.conf
+```
+
+Within the file, use the command `CTRL + W` to search for the rule **tx.blocking_paranoia_level**
+and uncomment it to set the *Paranoia Level 1*. It should be similar to the following snippet:
+
+```text
+SecAction \
+    "id:900000,\
+    phase:1,\
+    pass,\
+    t:none,\
+    nolog,\
+    tag:'OWASP_CRS',\
+    ver:'OWASP_CRS/4.22.0-dev',\
+    setvar:tx.blocking_paranoia_level=1"
+```
+
+Use the command `CTRL + W` to search for the rule **tx.allowed_methods** and uncomment it. The rule
+should be similar to the following snippet:
+
+```text
+SecAction \
+    "id:900200,\
+    phase:1,\
+    pass,\
+    t:none,\
+    nolog,\
+    tag:'OWASP_CRS',\
+    ver:'OWASP_CRS/4.22.0-dev',\
+    setvar:'tx.allowed_methods=GET HEAD POST OPTIONS'"
+```
+
+>**Note**:
+> If necessary, edit the list for the **tx.allowed_methods** variable
+
+Use the command `CTRL + W` to search for the rule **tx.max_num_args** and uncomment it. The rule
+should be similar to the following snippet:
+
+```text
+SecAction \
+    "id:900300,\
+    phase:1,\
+    pass,\
+    t:none,\
+    nolog,\
+    tag:'OWASP_CRS',\
+    ver:'OWASP_CRS/4.22.0-dev',\
+    setvar:tx.max_num_args=255"
+```
+
+Use the command `CTRL + W` to search for the rule **tx.arg_length** and uncomment it. The rule
+should be similar to the following snippet:
+
+```text
+SecAction \
+    "id:900320,\
+    phase:1,\
+    pass,\
+    t:none,\
+    nolog,\
+    tag:'OWASP_CRS',\
+    ver:'OWASP_CRS/4.22.0-dev',\
+    setvar:tx.arg_length=400"
+```
+
+Use the command `CTRL + W` to search for the rule **tx.total_arg_length** and uncomment it. The rule
+should be similar to the following snippet:
+
+```text
+SecAction \
+    "id:900330,\
+    phase:1,\
+    pass,\
+    t:none,\
+    nolog,\
+    tag:'OWASP_CRS',\
+    ver:'OWASP_CRS/4.22.0-dev',\
+    setvar:tx.total_arg_length=64000"
+```
+
+Use the command `CTRL + W` to search for the rule **tx.max_file_size** and uncomment it. The rule
+should be similar to the following snippet:
+
+```text
+SecAction \
+    "id:900340,\
+    phase:1,\
+    pass,\
+    t:none,\
+    nolog,\
+    tag:'OWASP_CRS',\
+    ver:'OWASP_CRS/4.22.0-dev',\
+    setvar:tx.max_file_size=1048576"
+```
+
+>**Note**:
+> If necessary, edit the value for the **tx.max_file_size** variable
+
+Use the command `CTRL + W` to search for the rule **tx.combined_file_sizes** and uncomment it.
+The rule should be similar to the following snippet:
+
+```text
+SecAction \
+    "id:900350,\
+    phase:1,\
+    pass,\
+    t:none,\
+    nolog,\
+    tag:'OWASP_CRS',\
+    ver:'OWASP_CRS/4.22.0-dev',\
+    setvar:tx.combined_file_sizes=1048576"
+```
+
+>**Note**:
+> If necessary, edit the value for the **tx.combined_file_sizes** variable
+
+Go through the rest of the configuration, with special care on the **HTTP Policy Settings**, and,
+if necessary, change the defaults to comply with the server's traffic requirement.
+
+After introducing all the changes, save the file with the command `CTRL + O` and then exit the
+[*nano text editor*](https://www.nano-editor.org/) with the command `CTRL + X`.
+
+Test the configuration syntax:
+
+```shell
+sudo apachectl configtest
+```
+
+If you see errors, double-check the file paths and the other modifications made in the previous
+steps. If you see Syntax OK, proceed and restart the Apache web server:
+
+```shell
+sudo systemctl restart apache2
+```
+
+Replace the placeholders in the below command as appropriate and verify if ModSecurity
+is functioning as intended:
+
+```shell
+curl -I {URL}/?test='1+OR+1=1'
+```
+
+> **Placeholder Definition**
+>
+> + **{URL}** : The domain served by the Apache Server;

@@ -2,9 +2,11 @@
 
 ## Introduction
 
-This is my personal guide to setup an Ubuntu server. To build this guide I've used the knowledge available on the internet and the sources are, as much as possible, linked on this guide.
+This is my personal guide to se tup an Ubuntu server. To build this guide I've used the knowledge
+available on the internet and the sources are, as much as possible, linked on this guide.
 
-I will be updating this guide as my knowledge and experience evolves. I will be glad to take advice, suggestions and/or [pull requests](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests).
+I will be updating this guide as my knowledge and experience evolves. I will be glad to take advice,
+suggestions and/or[pull requests](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests).
 
 ## Table of Contents
 
@@ -21,12 +23,13 @@ I will be updating this guide as my knowledge and experience evolves. I will be 
 2. Software installation
     1. [Apache Server installation](./02-01-apache-server-installation.md)
         1. [Install Apache](./02-01-apache-server-installation.md#211-install-apache)
-        2. [Setup the firewall](./02-01-apache-server-installation.md#212-setup-the-firewall)
+        2. [Set up the firewall](./02-01-apache-server-installation.md#212-set-up-the-firewall)
         3. [Check the Apache Server](./02-01-apache-server-installation.md#213-check-the-apache-server)
         4. [Change the Apache Server web root folder](./02-01-apache-server-installation.md#214-change-the-apache-server-web-root-folder)
-        5. [Setup the default directory to be served by Apache Web Server](./02-01-apache-server-installation.md#215-setup-the-default-directory-to-be-served-by-apache-web-server)
+        5. [Set up the default directory to be served by Apache Web Server](./02-01-apache-server-installation.md#215-set-up-the-default-directory-to-be-served-by-apache-web-server)
         6. [Set permissions for the Apache Server root folder](./02-01-apache-server-installation.md#216-set-permissions-for-the-apache-server-root-folder)
         7. [Keep the Apache Server root folder access permissions consistent with a cron job](./02-01-apache-server-installation.md#217-keep-the-apache-server-root-folder-access-permissions-consistent-with-a-cron-job)
+        8. [Install & Configure ModSecurity](./02-01-apache-server-installation.md#218-install--configure-modsecurity) 
     2. [MySQL Server installation](./02-02-mysql-server-installation.md)
         1. [Install MySQL](./02-02-mysql-server-installation.md#221-install-mysql)
         2. [Configure MySQL](./02-02-mysql-server-installation.md#222-configure-mysql)
