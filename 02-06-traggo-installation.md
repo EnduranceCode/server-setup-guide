@@ -70,21 +70,27 @@ To check if [**traggo**](https://traggo.net/) is running correctly, replace the 
 
 ### 2.6.2. Reverse Proxy Setup
 
-To ensure that the necessary [*Apache Server*](https://httpd.apache.org/) modules for reverse proxying are enabled, execute the following commands:
+To ensure that the necessary [*Apache Server*](https://httpd.apache.org/) modules for reverse proxying are enabled,
+execute the following commands:
 
     sudo a2enmod proxy
     sudo a2enmod proxy_http
     sudo a2enmod headers
     sudo systemctl reload apache2
 
-To have a domain (or a subdomain) pointing to your [**traggo**](https://traggo.net/) instance, you need to start by [creating the DNS records](https://docs.digitalocean.com/products/networking/dns/how-to/manage-records/) of the desired domain (or subdomain) redirecting to your server's IP address.
+To have a domain (or a subdomain) pointing to your [**traggo**](https://traggo.net/) instance,
+you need to start by 
+[creating the DNS records](https://docs.digitalocean.com/products/networking/dns/how-to/manage-records/)
+of the desired domain (or subdomain) redirecting to your server's IP address.
 
 After creating the necessary [DNS Records](https://docs.digitalocean.com/products/networking/dns/),
 create an Apache Virtual Host for that domain (or a subdomain) following the
 [instructions available in this repository](./03-01-apache-server-management.md#311-apache--create-a-virtual-host).
 To download the template for the Virtual Host configuration file, execute the following command:
 
-    sudo wget -P /etc/apache2/sites-available/ https://raw.githubusercontent.com/EnduranceCode/system-configuration-files/refs/heads/master/root/etc/apache2/sites-available/virtual-host-template.conf
+```shell
+sudo wget -P /etc/apache2/sites-available/ https://raw.githubusercontent.com/EnduranceCode/system-configuration-files/refs/heads/master/root/etc/apache2/sites-available/virtual-host-template.conf
+``` 
 
 When customizing the Virtual Host configuration file downloaded with the previous command, besides
 replacing the ***{LABELS}*** listed on the
@@ -96,7 +102,32 @@ execute also the following changes:
 + Change the template's directive `Timeout 300` to `Timeout 10`;
 + Add the options `retry=0 timeout=5` on the directive `ProxyPass`.
 
-Check if it's necessary any further modifications, implement it if necessary and when everything is done, save the file with the command `CTRL + O` and then exit the [*nano text editor*](https://www.nano-editor.org/) with the command `CTRL + X`. Then, proceed with the creation of a Virtual Host, following the [instructions available in this repository](./03-01-apache-server-management.md#311-apache--create-a-virtual-host).
+[**traggo**](https://traggo.net/) uses [GraphQL](https://graphql.org/) endpoints that can be blocked
+by some [ModSecurity](https://modsecurity.org/) rules. To avoid issues with these endpoints, it
+can be necessary to add [ModSecurity](https://modsecurity.org/) exclusions to the Virtual Host
+configuration file created for the [**traggo**](https://traggo.net/) instance. To do so, add the
+just before the closing `</VirtualHost>` tag.
+
+
+```text
+# Fix ModSecurity issues with GraphQL endpoints
+<LocationMatch "/graphql">
+
+    # Policy Violation - Disable "Argument value too long" (Rule 920370)
+    SecRuleRemoveById 920370
+
+    # Disable ALL RCE rules (932000 to 932999)
+    SecRuleRemoveById 932000-932999
+        
+    # Disable rule 942190 - SQL Injection Attack Detected via libinjection
+    SecRuleRemoveById 942190
+</LocationMatch>
+```
+
+Check if it's necessary any further modifications, implement it if necessary and when everything
+is done, save the file with the command `CTRL + O` and then exit the text editor with
+the command `CTRL + X`. Then, proceed with the creation of a Virtual Host, following
+the [instructions available in this repository](./03-01-apache-server-management.md#311-apache--create-a-virtual-host).
 
 ### 2.6.3. Create and set an SSL Certificate
 
