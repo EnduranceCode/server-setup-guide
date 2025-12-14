@@ -119,11 +119,18 @@ To check if [**linkding**](https://linkding.link/) is running correctly, replace
 
 To have a domain (or a subdomain) pointing to your [**linkding**](https://linkding.link/) instance, you need to start by [creating the DNS records](https://docs.digitalocean.com/products/networking/dns/how-to/manage-records/) of the desired domain (or subdomain) redirecting to your server's IP address.
 
-After creating the necessary [DNS Records](https://docs.digitalocean.com/products/networking/dns/), create an Apache Virtual Host for that domain (or a subdomain) following the [instructions available in this repository](./03-01-apache-server-management.md#311-apache--create-a-virtual-host). As you are setting a Reverse Proxy, instead of using the file `virtual-host-template.conf` stored at the folder [`/system/apache2/sites-available/`](./system/apache2/sites-available/), use instead the file [`virtual-host-reverse-proxy-template.conf`](./system/etc/apache2/sites-available/virtual-host-reverse-proxy-template.conf). To download this file, execute the following command:
+After creating the necessary [DNS Records](https://docs.digitalocean.com/products/networking/dns/),
+create an Apache Virtual Host for that domain (or a subdomain) following the
+[instructions available in this repository](./03-01-apache-server-management.md#311-apache--create-a-virtual-host).
+To download the template for the Virtual Host configuration file, execute the following command:
 
-    sudo wget -P /etc/apache2/sites-available/ https://raw.githubusercontent.com/EnduranceCode/server-setup-guide/refs/heads/master/system/etc/apache2/sites-available/virtual-host-reverse-proxy-template.conf
+    sudo wget -P /etc/apache2/sites-available/ https://raw.githubusercontent.com/EnduranceCode/system-configuration-files/refs/heads/master/root/etc/apache2/sites-available/virtual-host-template.conf
 
-When customizing the Virtual Host configuration file downloaded with the previous command, besides replacing the ***{LABELS}*** listed on the [provided instructions](./03-01-apache-server-management.md#211-install-apache), replace also the label ***{HOST_PORT}*** with the value set on the [.env](./system/opt/linkding/docker-files/.env) file for the `HOST_PORT` variable.
+When customizing the Virtual Host configuration file downloaded with the previous command, besides
+replacing the ***{LABELS}*** listed on the
+[provided instructions](./03-01-apache-server-management.md#311-apache--create-a-virtual-host),
+replace also the label ***{APP_PORT}*** with the value set on the
+[.env](./system/opt/linkding/docker-files/.env) file for the `HOST_PORT` variable.
 
 Check if it's necessary any further modifications, implement it if necessary and when everything is done, save the file with the command `CTRL + O` and then exit the [*nano text editor*](https://www.nano-editor.org/) with the command `CTRL + X`. Then, proceed with the creation of a Virtual Host, following the [instructions available in this repository](./03-01-apache-server-management.md#311-apache--create-a-virtual-host).
 

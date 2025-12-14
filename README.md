@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This is my personal guide to se tup an Ubuntu server. To build this guide I've used the knowledge
+This is my personal guide to set up an Ubuntu server. To build this guide I've used the knowledge
 available on the internet and the sources are, as much as possible, linked on this guide.
 
 I will be updating this guide as my knowledge and experience evolves. I will be glad to take advice,
@@ -56,7 +56,6 @@ suggestions and/or[pull requests](https://docs.github.com/en/pull-requests/colla
     1. [Apache Server Management](./03-01-apache-server-management.md)
         1. [Apache | Create a Virtual Host](./03-01-apache-server-management.md#311-apache--create-a-virtual-host)
         2. [Apache | Secure Apache with Let's Encrypt](./03-01-apache-server-management.md#312-apache--secure-apache-with-lets-encrypt)
-        3. [Apache | www to non-www redirection](./03-01-apache-server-management.md#313-apache--www-to-non-www-redirection)
     2. [MySQL Server Management](./03-02-mysql-server-management.md)
         1. [MySQL | Create a MySQL database](./03-02-mysql-server-management.md#321-mysql--create-a-mysql-database)
         2. [MySQL | Create a MySQL user](./03-02-mysql-server-management.md#322-mysql--create-a-mysql-user)
